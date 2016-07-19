@@ -4,6 +4,8 @@
 #include <string>
 using namespace std;
 
+//Kevin: Made a change to commit in GitHub
+
 //Direct3D variables
 LPDIRECT3D9 d3d = NULL; 
 LPDIRECT3DDEVICE9 d3ddev = NULL; 
