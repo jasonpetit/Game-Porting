@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="debug.h" />
     <ClInclude Include="MyDirectX.h" />
+    <ClInclude Include="SDLHeaders.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
