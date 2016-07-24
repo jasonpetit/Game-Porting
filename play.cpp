@@ -9,15 +9,16 @@
 #include <string>
 #include <sstream>
 #include "credits.h"
+#include "SDLHeaders.h"
 
 using namespace std;
 
 LPD3DXFONT font;
 
-LPDIRECT3DSURFACE9 Game_Surf = NULL;
-LPDIRECT3DTEXTURE9 Asteroid = NULL;
-LPDIRECT3DTEXTURE9 Ship = NULL;
-LPDIRECT3DTEXTURE9 Bullet = NULL;
+SDL_Surface Game_Surf = NULL;
+SDL_Surface Asteroid = NULL;
+SDL_Surface Ship = NULL;
+SDL_Surface Bullet = NULL;
 
 CSound *sound_explode = NULL;
 CSound *sound_fire = NULL;

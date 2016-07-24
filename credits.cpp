@@ -5,19 +5,20 @@
 // credits.cpp
 
 #include "credits.h"
+#include "SDLHeaders.h"
 
 using namespace std;
 
-LPDIRECT3DSURFACE9 back_surf = NULL;
-LPDIRECT3DTEXTURE9 credit_text = NULL;
-LPDIRECT3DTEXTURE9 design_text = NULL;
-LPDIRECT3DTEXTURE9 prog_text = NULL;
-LPDIRECT3DTEXTURE9 art_text = NULL;
-LPDIRECT3DTEXTURE9 credB_text = NULL;
-LPDIRECT3DTEXTURE9 explode_text = NULL;
-LPDIRECT3DTEXTURE9 gShip_text = NULL;
-LPDIRECT3DTEXTURE9 menu_text = NULL;
-LPDIRECT3DTEXTURE9 creditSp_text = NULL;
+SDL_Surface back_surf = NULL;
+SDL_Surface credit_text = NULL;
+SDL_Surface design_text = NULL;
+SDL_Surface prog_text = NULL;
+SDL_Surface art_text = NULL;
+SDL_Surface credB_text = NULL;
+SDL_Surface explode_text = NULL;
+SDL_Surface gShip_text = NULL;
+SDL_Surface menu_text = NULL;
+SDL_Surface creditSp_text = NULL;
 
 CSound *sound_music = NULL;
 

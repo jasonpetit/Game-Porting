@@ -11,14 +11,14 @@
 
 using namespace std;
 
-LPDIRECT3DSURFACE9 backG = NULL;
-LPDIRECT3DTEXTURE9 Title_text = NULL;
-LPDIRECT3DTEXTURE9 Play_text = NULL;
-LPDIRECT3DTEXTURE9 Exit_text = NULL;
-LPDIRECT3DTEXTURE9 Credits_text = NULL;
-LPDIRECT3DTEXTURE9 Hplay = NULL;
-LPDIRECT3DTEXTURE9 Hexit = NULL;
-LPDIRECT3DTEXTURE9 Hcredits = NULL;
+SDL_Surface backG = NULL;
+SDL_Surface Title_text = NULL;
+SDL_Surface Play_text = NULL;
+SDL_Surface Exit_text = NULL;
+SDL_Surface Credits_text = NULL;
+SDL_Surface Hplay = NULL;
+SDL_Surface Hexit = NULL;
+SDL_Surface Hcredits = NULL;
 
 CSound *sound_song = NULL;
 

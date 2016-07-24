@@ -5,8 +5,9 @@
 //explode.cpp
 
 #include "explode.h"
+#include "SDLHeaders.h"
 
-LPDIRECT3DTEXTURE9 Xplode = NULL;
+SDL_Surface Xplode = NULL;
 
 SPRITE xplode;
 
