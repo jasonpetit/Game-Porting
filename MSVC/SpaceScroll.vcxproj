@@ -65,11 +65,13 @@
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)/Intermediate/$(Configuration)/</IntDir>
     <LibraryPath>$(DXSDK_DIR)/lib/x86;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)/bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)/Intermediate/$(Configuration)/</IntDir>
     <LibraryPath>$(DXSDK_DIR)/lib/x86;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)/bin</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
