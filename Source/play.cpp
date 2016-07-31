@@ -15,10 +15,10 @@ using namespace std;
 
 LPD3DXFONT font;
 
-SDL_Surface Game_Surf = NULL;
-SDL_Surface Asteroid = NULL;
-SDL_Surface Ship = NULL;
-SDL_Surface Bullet = NULL;
+SDL_Surface *Game_Surf = NULL;
+SDL_Surface *Asteroid = NULL;
+SDL_Surface *Ship = NULL;
+SDL_Surface *Bullet = NULL;
 
 CSound *sound_explode = NULL;
 CSound *sound_fire = NULL;
@@ -37,23 +37,29 @@ bool Play::Game_Init(HWND window)
 {
 	srand(time(NULL));
 
+	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
+	{
+		return false;
+	}
+
+	//I haven't added the screen variables in SDL yet, but when I do the screen will be set up here.
+
 	sound_fire = LoadSound("blaster.wav");
 	sound_explode = LoadSound("blast.wav");
 
 	//create Font for the score
 	font = MakeFont("STENCIL", 24);
 
-	Game_Surf = LoadSurface("Starfield.bmp");
+	Game_Surf = load_image("Starfield.bmp");
 
-	if (!Game_Surf)
+	if (Game_Surf == NULL)
 	{
-		MessageBox(window, "Error loading Background", "Error", 0);
 		return false;
 	}
 
 	creds.Game_Init(window);
 
-	Asteroid = LoadTexture("asteroid.tga");
+	Asteroid = load_image("asteroid.tga");
 
 	//asteroids properties
 	for (int n = 0; n < numasteroid; n++)
@@ -70,7 +76,7 @@ bool Play::Game_Init(HWND window)
 		asteroid[n].vely = 0.25f;
 	}
 
-	Ship = LoadTexture("ships.png");
+	Ship = load_image("ships.png");
 
 	//ship properties
 	ship.x = 475;
@@ -82,7 +88,7 @@ bool Play::Game_Init(HWND window)
 	ship.endframe = 0;
 	ship.delay = 120;
 
-	Bullet = LoadTexture("SpaceBu.bmp");
+	Bullet = load_image("SpaceBu.bmp");
 
 	//bullet Properties
 	bullet.width = 35;
