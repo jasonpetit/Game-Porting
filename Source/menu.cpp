@@ -11,14 +11,14 @@
 
 using namespace std;
 
-SDL_Surface backG = NULL;
-SDL_Surface Title_text = NULL;
-SDL_Surface Play_text = NULL;
-SDL_Surface Exit_text = NULL;
-SDL_Surface Credits_text = NULL;
-SDL_Surface Hplay = NULL;
-SDL_Surface Hexit = NULL;
-SDL_Surface Hcredits = NULL;
+SDL_Surface *backG = NULL;
+SDL_Surface *Title_text = NULL;
+SDL_Surface *Play_text = NULL;
+SDL_Surface *Exit_text = NULL;
+SDL_Surface *Credits_text = NULL;
+SDL_Surface *Hplay = NULL;
+SDL_Surface *Hexit = NULL;
+SDL_Surface *Hcredits = NULL;
 
 CSound *sound_song = NULL;
 
@@ -27,25 +27,24 @@ Play play;
 GameMode gamemode;
 SPRITE playT, exitT, creditsT, title;
 
-bool Menu::Game_Init(HWND window)
+bool Menu::Game_Init()
 {
-	backG = LoadSurface("background.bmp");
+	backG = play.load_image("background.bmp");
 
 	sound_song = LoadSound("starwars.wav");
 
-	if (!backG)
+	if (backG == NULL)
 	{
-		MessageBox(window, "Error loading Background", "Error", 0);
 		return false;
 	}
 
-	Title_text = LoadTexture("Title.bmp");
-	Play_text = LoadTexture("play.bmp");
-	Exit_text = LoadTexture("exit.bmp");
-	Credits_text = LoadTexture("credits.bmp");
+	Title_text = play.load_image("Title.bmp");
+	Play_text = play.load_image("play.bmp");
+	Exit_text = play.load_image("exit.bmp");
+	Credits_text = play.load_image("credits.bmp");
 
-	credit.Game_Init(window);
-	play.Game_Init(window);
+	credit.Game_Init();
+	play.Game_Init();
 
 	//Sprite properties
 	playT.x = 15;
@@ -84,7 +83,7 @@ bool Menu::Game_Init(HWND window)
 	return true;
 }
 
-void Menu::Game_Run(HWND window)
+void Menu::Game_Run()
 {
 	static bool keyRelease = true;
 	static bool plays = false;

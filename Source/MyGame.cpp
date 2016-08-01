@@ -6,33 +6,40 @@
 
 #include "MyDirectX.h"
 #include "DirectSound.h"
+#include "SDLHeaders.h"
 #include "menu.h"
 
 using namespace std;
 
-const string APPTITLE = "BATTLE GALAXY";
+//const string APPTITLE = "BATTLE GALAXY";
 const int SCREENW = 1024;
 const int SCREENH = 768;
+const int SCREEN_BP = 32;
+
+SDL_Surface *Screen;
 
 Menu menu;
 
-bool Game_Init(HWND window)
+bool Game_Init()
 {
 	srand(time(NULL));
 
-	//initialize Direct3D
-	if (!Direct3D_Init(window, SCREENW, SCREENH, false))
+	//initialize SDL
+	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
 	{
-		MessageBox(window, "Error initializing Direct3D", APPTITLE.c_str(), 0);
 		return false;
 	}
 
-	//initialize DirectInput
-	if (!DirectInput_Init(window))
+	Screen = SDL_SetVideoMode(SCREENW, SCREENH, SCREEN_BP, SDL_SWSURFACE);
+
+	//if there was an error
+	if (Screen == NULL)
 	{
-		MessageBox(window, "Error initializing DirectInput", APPTITLE.c_str(), 0);
 		return false;
 	}
+
+	//set the caption
+	SDL_WM_SetCaption("BATTLE GALAXY", NULL);
 
 	//initialize DirectSound
 	if (!DirectSound_Init(window))
@@ -41,7 +48,7 @@ bool Game_Init(HWND window)
 		return false;
 	}
 
-	menu.Game_Init(window);
+	menu.Game_Init();
 
 	return true;
 }
@@ -82,6 +89,5 @@ void Game_End()
 {
 	menu.Game_end();
 	DirectSound_Shutdown();
-	DirectInput_Shutdown();
-	Direct3D_Shutdown();
+	SDL_Quit();
 }

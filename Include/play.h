@@ -17,7 +17,7 @@ class Play
 {
 public:
 	//Game functions
-	bool Game_Init(HWND window);
+	bool Game_Init();
 	void Game_Run(HWND window);
 	void Game_End();
 

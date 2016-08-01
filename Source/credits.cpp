@@ -9,18 +9,20 @@
 
 using namespace std;
 
-SDL_Surface back_surf = NULL;
-SDL_Surface credit_text = NULL;
-SDL_Surface design_text = NULL;
-SDL_Surface prog_text = NULL;
-SDL_Surface art_text = NULL;
-SDL_Surface credB_text = NULL;
-SDL_Surface explode_text = NULL;
-SDL_Surface gShip_text = NULL;
-SDL_Surface menu_text = NULL;
-SDL_Surface creditSp_text = NULL;
+SDL_Surface *back_surf = NULL;
+SDL_Surface *credit_text = NULL;
+SDL_Surface *design_text = NULL;
+SDL_Surface *prog_text = NULL;
+SDL_Surface *art_text = NULL;
+SDL_Surface *credB_text = NULL;
+SDL_Surface *explode_text = NULL;
+SDL_Surface *gShip_text = NULL;
+SDL_Surface *menu_text = NULL;
+SDL_Surface *creditSp_text = NULL;
 
 CSound *sound_music = NULL;
+
+Play play;
 
 struct sprite
 {
@@ -37,9 +39,9 @@ sprite gShip;
 sprite menu;
 sprite credSp;
 
-bool Credits::Game_Init(HWND window)
+bool Credits::Game_Init()
 {
-	back_surf = LoadSurface("background.bmp");
+	back_surf = play.load_image("background.bmp");
 
 	sound_music = LoadSound("credits.wav");
 	if (!back_surf)
@@ -48,9 +50,9 @@ bool Credits::Game_Init(HWND window)
 		return false;
 	}
 
-	credit_text = LoadTexture("creditsT.bmp");
-	design_text = LoadTexture("design.bmp");
-	prog_text = LoadTexture("program.bmp");
+	credit_text = play.load_image("creditsT.bmp");
+	design_text = play.load_image("design.bmp");
+	prog_text = play.load_image("program.bmp");
 
 
 	//postion sprites x variable
@@ -67,7 +69,7 @@ bool Credits::Game_Init(HWND window)
 	return true;
 }
 
-void Credits::Game_Run(HWND window)
+void Credits::Game_Run()
 {
 	//make sure the Direct 3D device is valid
 	if (!d3ddev)
@@ -112,8 +114,8 @@ void Credits::Game_Run(HWND window)
 
 void Credits::Game_End()
 {
-	back_surf->Release();
-	credit_text->Release();
-	design_text->Release();
-	prog_text->Release();
+	SDL_FreeSurface(back_surf);
+	SDL_FreeSurface(credit_text);
+	SDL_FreeSurface(design_text);
+	SDL_FreeSurface(prog_text);
 }

@@ -14,8 +14,8 @@ using namespace std;
 class Menu
 {
 public:
-	bool Game_Init(HWND window);
-	void Game_Run(HWND window);
+	bool Game_Init();
+	void Game_Run();
 	void Game_end();
 };
 

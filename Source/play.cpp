@@ -33,16 +33,9 @@ SPRITE asteroid[numasteroid], ship, bullet, fonts;
 Explode xplode;
 Credits creds;
 
-bool Play::Game_Init(HWND window)
+bool Play::Game_Init()
 {
 	srand(time(NULL));
-
-	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
-	{
-		return false;
-	}
-
-	//I haven't added the screen variables in SDL yet, but when I do the screen will be set up here.
 
 	sound_fire = LoadSound("blaster.wav");
 	sound_explode = LoadSound("blast.wav");
@@ -359,9 +352,9 @@ void Play::Game_Run(HWND window)
 
 void Play::Game_End()
 {
-	Game_Surf->Release();
-	Asteroid->Release();
-	Ship->Release();
-	Bullet->Release();
+	SDL_FreeSurface(Game_Surf);
+	SDL_FreeSurface(Asteroid);
+	SDL_FreeSurface(Ship);
+	SDL_FreeSurface(Bullet);
 	xplode.end();
 }

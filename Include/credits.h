@@ -8,14 +8,15 @@
 #define CREDITS_H
 
 #include "MyDirectX.h"
+#include "play.h"
 
 using namespace std;
 
 class Credits
 {
 public:
-	bool Game_Init(HWND window);
-	void Game_Run(HWND window);
+	bool Game_Init();
+	void Game_Run();
 	void Game_End();
 };
 
