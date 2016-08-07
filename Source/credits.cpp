@@ -46,7 +46,7 @@ bool Credits::Game_Init()
 	sound_music = LoadSound("credits.wav");
 	if (!back_surf)
 	{
-		MessageBox(window, "Error loading Background", "Error", 0);
+		//MessageBox(window, "Error loading Background", "Error", 0);
 		return false;
 	}
 

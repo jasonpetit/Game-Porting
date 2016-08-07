@@ -20,8 +20,8 @@ SDL_Surface *Asteroid = NULL;
 SDL_Surface *Ship = NULL;
 SDL_Surface *Bullet = NULL;
 
-CSound *sound_explode = NULL;
-CSound *sound_fire = NULL;
+Mix_Chunk *sound_explode = NULL;
+Mix_Chunk *sound_fire = NULL;
 
 const int numasteroid = 10;
 static bool ShipDestroyed = false;
@@ -37,8 +37,8 @@ bool Play::Game_Init()
 {
 	srand(time(NULL));
 
-	sound_fire = LoadSound("blaster.wav");
-	sound_explode = LoadSound("blast.wav");
+	sound_fire = Mix_LoadWAV("blaster.wav");
+	sound_explode = Mix_LoadWAV("blast.wav");
 
 	//create Font for the score
 	font = MakeFont("STENCIL", 24);
@@ -50,7 +50,7 @@ bool Play::Game_Init()
 		return false;
 	}
 
-	creds.Game_Init(window);
+	creds.Game_Init();
 
 	Asteroid = load_image("asteroid.tga");
 
@@ -208,7 +208,7 @@ void Play::Game_Run(HWND window)
 			explodeY = bullet.y;
 			score += 100;
 			doExplosion = true;
-			PlaySound(sound_explode);
+			Mix_PlayChannel(-1, sound_explode, 0);
 		}
 	}
 
@@ -220,7 +220,7 @@ void Play::Game_Run(HWND window)
 			shipY = ship.y;
 			ship.x = -1999;
 			doExplosions = true;
-			PlaySound(sound_explode);
+			Mix_PlayChannel(-1, sound_explode, 0);
 			asteroid[one].velx *= -1;
 			lives -= 1;
 			if (lives > 0)
@@ -271,7 +271,7 @@ void Play::Game_Run(HWND window)
 			bullet.x = ship.x;
 			bullet.y = ship.y;
 			keyRelease = false;
-			PlaySound(sound_fire);
+			Mix_PlayChannel(-1, sound_fire, 0);
 		}
 		if (!Key_Down(VK_SPACE))
 		{

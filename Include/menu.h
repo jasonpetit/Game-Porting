@@ -8,6 +8,7 @@
 #define MENU_H
 
 #include "MyDirectX.h"
+#include "SDLHeaders.h"
 
 using namespace std;
 

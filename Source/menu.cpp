@@ -20,7 +20,7 @@ SDL_Surface *Hplay = NULL;
 SDL_Surface *Hexit = NULL;
 SDL_Surface *Hcredits = NULL;
 
-CSound *sound_song = NULL;
+Mix_Music *sound_song = NULL;
 
 Credits credit;
 Play play;
@@ -31,7 +31,7 @@ bool Menu::Game_Init()
 {
 	backG = play.load_image("background.bmp");
 
-	sound_song = LoadSound("starwars.wav");
+	sound_song = Mix_LoadMUS("starwars.wav");
 
 	if (backG == NULL)
 	{
@@ -155,16 +155,16 @@ void Menu::Game_Run()
 			Sprite_Transform_Draw(Play_text, playT.x, playT.y, playT.width, playT.height, playT.frame, playT.columns);
 			Sprite_Transform_Draw(Title_text, title.x, title.y, title.width, title.height, title.frame, title.columns);
 			Sprite_Transform_Draw(Credits_text, creditsT.x, creditsT.y, creditsT.width, creditsT.height, creditsT.frame, creditsT.columns);
-			LoopSound(sound_song);
+			Mix_PlayMusic(sound_song, -1);
 			break;
 
 		case PLAY:
-			StopSound(sound_song);
-			play.Game_Run(window);
+			Mix_HaltMusic();
+			play.Game_Run();
 			break;
 		case CREDITS:
-			StopSound(sound_song);
-			credit.Game_Run(window);
+			Mix_PauseMusic();
+			credit.Game_Run();
 			break;
 		case EXIT:
 			gameover = true;

@@ -86,7 +86,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3dx9.lib;../Dependencies/SDL/lib/SDL.lib;../Dependencies/SDL/lib/SDLmain.lib;../Dependencies/SDL/lib/SDL_ttf.lib;../Dependencies/SDL/lib/SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3dx9.lib;../Dependencies/SDL/lib/SDL.lib;../Dependencies/SDL/lib/SDLmain.lib;../Dependencies/SDL/lib/SDL_ttf.lib;../Dependencies/SDL/lib/SDL_image.lib;../Dependencies/SDL/lib/SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -106,7 +106,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3dx9.lib;../Dependencies/SDL/lib/SDL.lib;../Dependencies/SDL/lib/SDLmain.lib;../Dependencies/SDL/lib/SDL_ttf.lib;../Dependencies/SDL/lib/SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3dx9.lib;../Dependencies/SDL/lib/SDL.lib;../Dependencies/SDL/lib/SDLmain.lib;../Dependencies/SDL/lib/SDL_ttf.lib;../Dependencies/SDL/lib/SDL_image.lib;../Dependencies/SDL/lib/SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

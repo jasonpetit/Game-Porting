@@ -41,10 +41,9 @@ bool Game_Init()
 	//set the caption
 	SDL_WM_SetCaption("BATTLE GALAXY", NULL);
 
-	//initialize DirectSound
-	if (!DirectSound_Init(window))
+	//Initialize SDL_mixer
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
-		MessageBox(window, "Error initializing DirectSound", APPTITLE.c_str(), 0);
 		return false;
 	}
 
@@ -73,7 +72,7 @@ void Game_Run(HWND window)
 		//stop drawing
 		spriteobj->End();
 
-		menu.Game_Run(window);
+		menu.Game_Run();
 
 		//stop rendering
 		d3ddev->EndScene();
