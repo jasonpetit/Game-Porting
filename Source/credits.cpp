@@ -20,7 +20,7 @@ SDL_Surface *gShip_text = NULL;
 SDL_Surface *menu_text = NULL;
 SDL_Surface *creditSp_text = NULL;
 
-CSound *sound_music = NULL;
+Mix_Music *sound_music = NULL;
 
 Play play;
 
@@ -43,7 +43,7 @@ bool Credits::Game_Init()
 {
 	back_surf = play.load_image("background.bmp");
 
-	sound_music = LoadSound("credits.wav");
+	sound_music = Mix_LoadMUS("credits.wav");
 	if (!back_surf)
 	{
 		//MessageBox(window, "Error loading Background", "Error", 0);
@@ -85,7 +85,7 @@ void Credits::Game_Run()
 		//start drawing
 		spriteobj->Begin(D3DXSPRITE_ALPHABLEND);
 
-		LoopSound(sound_music);
+		Mix_PlayMusic(sound_music, -1);
 
 		d3ddev->StretchRect(back_surf, NULL, backbuffer, NULL, D3DTEXF_NONE);
 
