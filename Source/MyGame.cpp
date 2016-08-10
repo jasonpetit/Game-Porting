@@ -4,8 +4,8 @@
 
 // MyGame.cpp
 
-#include "MyDirectX.h"
-#include "DirectSound.h"
+//#include "MyDirectX.h"
+//#include "DirectSound.h"
 #include "SDLHeaders.h"
 #include "menu.h"
 
@@ -17,6 +17,8 @@ const int SCREENH = 768;
 const int SCREEN_BP = 32;
 
 SDL_Surface *Screen;
+
+SDL_Event event;
 
 Menu menu;
 
@@ -52,18 +54,18 @@ bool Game_Init()
 	return true;
 }
 
-void Game_Run(HWND window)
+void Game_Run()
 {
 	static bool keyRelease = false;
 
-	if (!d3ddev)
+	/*if (!d3ddev)
 		return;
 
 	DirectInput_Update();
-	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 100), 1.0f, 0);
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 100), 1.0f, 0);*/
 
 	//start rendering
-	if (d3ddev->BeginScene())
+	/*if (d3ddev->BeginScene())
 	{
 
 		//start sprite handler
@@ -81,12 +83,32 @@ void Game_Run(HWND window)
 
 	//exit with escape key
 	if (KEY_DOWN(VK_ESCAPE))
-		gameover = true;
+		gameover = true;*/
+
+	while (!gameover)
+	{
+		if (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_KEYDOWN)
+			{
+				if (event.key.keysym.sym == SDLK_ESCAPE)
+					gameover = true;
+			}
+			else if (event.type == SDL_QUIT)
+			{
+				gameover = true;
+			}
+		}
+		//update the screen
+		if (SDL_Flip(Screen) == -1)
+		{
+			return;
+		}
+	}
 }
 
 void Game_End()
 {
 	menu.Game_end();
-	DirectSound_Shutdown();
 	SDL_Quit();
 }

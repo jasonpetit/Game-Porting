@@ -20,6 +20,8 @@ SDL_Surface *Asteroid = NULL;
 SDL_Surface *Ship = NULL;
 SDL_Surface *Bullet = NULL;
 
+SDL_Event event;
+
 Mix_Chunk *sound_explode = NULL;
 Mix_Chunk *sound_fire = NULL;
 
@@ -123,9 +125,9 @@ void rebound(SPRITE &sprite1, SPRITE &sprite2)
 	sprite1.y += sprite1.vely;
 }
 
-void Play::Game_Run(HWND window)
+void Play::Game_Run()
 {
-	if (!d3ddev)
+	/*if (!d3ddev)
 		return;
 
 	D3DXVECTOR2 trans((float)0, (float)0);
@@ -134,7 +136,7 @@ void Play::Game_Run(HWND window)
 	spriteobj->SetTransform(&mat);
 
 	DirectInput_Update();
-	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 100), 1.0f, 0);
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 100), 1.0f, 0);*/
 
 	//display font
 	stringstream out;
@@ -235,7 +237,56 @@ void Play::Game_Run(HWND window)
 		Sprite_Animate(asteroid[n].frame, asteroid[n].startframe, asteroid[n].endframe, asteroid[n].direction, asteroid[n].starttime, asteroid[n].delay);
 	}
 
-	if (Key_Down(DIK_UP))
+	if (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_KEYDOWN)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_UP:
+			{
+				ship.y -= 0.55f;
+				if (ship.y < 0)
+					ship.y = 0;
+				break;
+			}
+			case SDLK_LEFT:
+			{
+				ship.x -= 0.55f;
+				if (ship.x < 0)
+					ship.x = 0;
+				break;
+			}
+			case SDLK_DOWN:
+			{
+				ship.y += 0.55f;
+				if (ship.y > SCREENH - ship.height)
+					ship.y = SCREENH - ship.height;
+			}
+			case SDLK_RIGHT:
+			{
+				ship.x += 0.55f;
+				if (ship.x > SCREENW - ship.width)
+					ship.x = SCREENW - ship.width;
+			}
+			case SDLK_SPACE:
+			{
+				if (!showBullet)
+				{
+					showBullet = true;
+					bullet.x = ship.x;
+					bullet.y = ship.y;
+					Mix_PlayChannel(-1, sound_fire, 0);
+				}
+				else
+				{
+					showBullet = false;
+				}
+			}
+			}
+		}
+	}
+	/*if (Key_Down(DIK_UP))
 	{
 		ship.y -= 0.55f;
 		if (ship.y < 0)
@@ -284,7 +335,7 @@ void Play::Game_Run(HWND window)
 		{
 			showBullet = false;
 		}
-	}
+	}*/
 
 	Sprite_Animate(ship.frame, ship.startframe, ship.endframe, ship.direction, ship.starttime, ship.delay);
 
@@ -337,7 +388,7 @@ void Play::Game_Run(HWND window)
 		{
 			spriteobj->End();
 			
-			creds.Game_Run(window);
+			creds.Game_Run();
 		}
 		//stop drawing
 		spriteobj->End();

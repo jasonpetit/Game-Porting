@@ -18,7 +18,7 @@ class Play
 public:
 	//Game functions
 	bool Game_Init();
-	void Game_Run(HWND window);
+	void Game_Run();
 	void Game_End();
 
 	//SDL functions
