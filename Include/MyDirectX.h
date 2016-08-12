@@ -46,7 +46,7 @@ extern LPDIRECT3DSURFACE9 backbuffer;
 extern LPD3DXSPRITE spriteobj;
 
 //sprite structure
-struct SPRITE
+/*struct SPRITE
 {
 	float x, y;
 	int frame, columns;
@@ -71,7 +71,7 @@ struct SPRITE
 		velx = vely = 0.0f;
 		color = D3DCOLOR_XRGB(255, 255, 255);
 	}
-};
+};*/
 
 //Direct3D functions
 bool Direct3D_Init(HWND hwnd, int width, int height, bool fullscreen);

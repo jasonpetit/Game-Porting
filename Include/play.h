@@ -57,4 +57,46 @@ public:
 	}// end load_image
 };
 
+class SPRITE
+{
+private:
+	//offsets
+	float x, y;
+	//rate of movement
+	int velocity;
+	//current frame
+	int frame;
+	//animation status
+	int status;
+
+public:
+	//initializes the variables
+	SPRITE::SPRITE()
+	{
+		//Initialize movement variables
+		x = y = 0;
+		velocity = 0;
+
+		//Initialize animation variables
+		frame = 0;
+	}
+
+	//handles input
+	void SPRITE::handle_events()
+	{
+
+	}
+
+	//moves the sprite
+	void SPRITE::move()
+	{
+
+	}
+
+	//shows the sprite
+	void SPRITE::show()
+	{
+
+	}
+};
 #endif

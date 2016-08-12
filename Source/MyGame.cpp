@@ -54,6 +54,8 @@ bool Game_Init()
 	return true;
 }
 
+
+
 void Game_Run()
 {
 	static bool keyRelease = false;
