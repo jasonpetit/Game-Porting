@@ -44,7 +44,7 @@ bool Game_Init()
 	SDL_WM_SetCaption("BATTLE GALAXY", NULL);
 
 	//Initialize SDL_mixer
-	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 8, 4096) == -1)
 	{
 		return false;
 	}
@@ -71,7 +71,7 @@ void Game_Run()
 	{
 
 		//start sprite handler
-		spriteobj->Begin(D3DXSPRITE_ALPHABLEND);
+		spriteobj->Begin(D3DXSprite_ALPHABLEND);
 
 		//stop drawing
 		spriteobj->End();

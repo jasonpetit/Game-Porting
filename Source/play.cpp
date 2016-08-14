@@ -30,14 +30,14 @@ static bool ShipDestroyed = false;
 int score = 0;
 int lives = 3;
 
-SPRITE asteroid[numasteroid], ship, bullet, fonts;
+Sprite asteroid[numasteroid], ship, bullet, fonts;
 
 Explode xplode;
 Credits creds;
 
 bool Play::Game_Init()
 {
-	srand(time(NULL));
+	srand(unsigned int(time(NULL)));
 
 	sound_fire = Mix_LoadWAV("blaster.wav");
 	sound_explode = Mix_LoadWAV("blast.wav");
@@ -95,7 +95,7 @@ bool Play::Game_Init()
 	return true;
 }
 
-void rebound(SPRITE &sprite1, SPRITE &sprite2)
+void rebound(Sprite &sprite1, Sprite &sprite2)
 {
 	float centerx1 = sprite1.x + sprite1.width / 2;
 	float centery1 = sprite1.y + sprite1.height / 2;
@@ -105,20 +105,20 @@ void rebound(SPRITE &sprite1, SPRITE &sprite2)
 
 	if (centerx1 < centerx2)
 	{
-		sprite1.velx = fabs(sprite1.velx) * -1;
+		sprite1.velx = std::abs(sprite1.velx) * -1;
 	}
 	else if (centerx1 > centerx2)
 	{
-		sprite1.velx = fabs(sprite1.velx);
+		sprite1.velx = std::abs(sprite1.velx);
 	}
 
 	if (centery1 < centery2)
 	{
-		sprite1.vely = fabs(sprite1.vely) * -1;
+		sprite1.vely = std::abs(sprite1.vely) * -1;
 	}
 	else
 	{
-		sprite1.vely = fabs(sprite1.vely);
+		sprite1.vely = std::abs(sprite1.vely);
 	}
 
 	sprite1.x += sprite1.velx;
@@ -343,7 +343,7 @@ void Play::Game_Run()
 	if (d3ddev->BeginScene())
 	{
 		//start sprite handler
-		spriteobj->Begin(D3DXSPRITE_ALPHABLEND);
+		spriteobj->Begin(D3DXSprite_ALPHABLEND);
 
 		d3ddev->StretchRect(Game_Surf, NULL, backbuffer, NULL, D3DTEXF_NONE);
 

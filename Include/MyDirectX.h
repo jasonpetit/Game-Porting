@@ -43,10 +43,10 @@ extern bool gameover;
 extern LPDIRECT3D9 d3d;
 extern LPDIRECT3DDEVICE9 d3ddev;
 extern LPDIRECT3DSURFACE9 backbuffer;
-extern LPD3DXSPRITE spriteobj;
+extern LPD3DXSprite spriteobj;
 
 //sprite structure
-/*struct SPRITE
+/*struct Sprite
 {
 	float x, y;
 	int frame, columns;
@@ -58,7 +58,7 @@ extern LPD3DXSPRITE spriteobj;
 	float velx, vely;
 	D3DCOLOR color;
 
-	SPRITE()
+	Sprite()
 	{
 		frame = 0;
 		columns = 1;
@@ -87,10 +87,10 @@ void Sprite_Transform_Draw(LPDIRECT3DTEXTURE9 image, int x, int y, int width, in
 	D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
 
 //bounding box collision detection
-int Collision(SPRITE sprite1, SPRITE sprite2);
+int Collision(Sprite sprite1, Sprite sprite2);
 
 //distance based collision detection
-bool CollisionD(SPRITE sprite1, SPRITE sprite2);
+bool CollisionD(Sprite sprite1, Sprite sprite2);
 
 //DirectInput objects, devices, and states
 extern LPDIRECTINPUT8 dinput;

@@ -15,20 +15,29 @@
     <ClInclude Include="..\Include\DirectSound.h" />
     <ClInclude Include="..\Include\Enum.h" />
     <ClInclude Include="..\Include\explode.h" />
+    <ClInclude Include="..\Include\Game.h" />
+    <ClInclude Include="..\Include\ImgManager.h" />
+    <ClInclude Include="..\Include\libheaders.h" />
     <ClInclude Include="..\Include\menu.h" />
     <ClInclude Include="..\Include\MyDirectX.h" />
     <ClInclude Include="..\Include\play.h" />
     <ClInclude Include="..\Include\SDLHeaders.h" />
+    <ClInclude Include="..\Include\Sprite.h" />
+    <ClInclude Include="..\Include\State.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\credits.cpp" />
     <ClCompile Include="..\Source\DirectSound.cpp" />
     <ClCompile Include="..\Source\explode.cpp" />
+    <ClCompile Include="..\Source\Game.cpp" />
+    <ClCompile Include="..\Source\ImgManager.cpp" />
+    <ClCompile Include="..\Source\main.cpp" />
     <ClCompile Include="..\Source\menu.cpp" />
     <ClCompile Include="..\Source\MyDirectX.cpp" />
     <ClCompile Include="..\Source\MyGame.cpp" />
     <ClCompile Include="..\Source\MyWindows.cpp" />
     <ClCompile Include="..\Source\play.cpp" />
+    <ClCompile Include="..\Source\Sprite.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{059FFE2A-56B8-4581-BBEE-819E5771832D}</ProjectGuid>
@@ -65,13 +74,13 @@
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)/Intermediate/$(Configuration)/</IntDir>
     <LibraryPath>$(DXSDK_DIR)/lib/x86;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)/bin</OutDir>
+    <OutDir>$(SolutionDir)/bin/</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)/Intermediate/$(Configuration)/</IntDir>
     <LibraryPath>$(DXSDK_DIR)/lib/x86;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)/bin</OutDir>
+    <OutDir>$(SolutionDir)/bin/</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

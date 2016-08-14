@@ -7,12 +7,12 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{68957a20-7311-43c5-b2f5-4ef5e3541a60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Deprecated">
+      <UniqueIdentifier>{7f29e397-1d8a-45cd-83e4-d10b401fc7ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\credits.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\DirectSound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Enum.h">
@@ -24,21 +24,36 @@
     <ClInclude Include="..\Include\menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\MyDirectX.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\play.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\SDLHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\libheaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ImgManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\DirectSound.h">
+      <Filter>Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MyDirectX.h">
+      <Filter>Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\credits.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\DirectSound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\explode.cpp">
@@ -47,16 +62,31 @@
     <ClCompile Include="..\Source\menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\MyDirectX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\MyGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\MyWindows.cpp">
+    <ClCompile Include="..\Source\play.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\play.cpp">
+    <ClCompile Include="..\Source\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ImgManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\DirectSound.cpp">
+      <Filter>Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MyDirectX.cpp">
+      <Filter>Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MyWindows.cpp">
+      <Filter>Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -13,7 +13,7 @@ using namespace std;
 LPDIRECT3D9 d3d = NULL;
 LPDIRECT3DDEVICE9 d3ddev = NULL;
 LPDIRECT3DSURFACE9 backbuffer = NULL;
-LPD3DXSPRITE spriteobj = NULL;
+LPD3DXSprite spriteobj = NULL;
 
 //DirectInput variables
 LPDIRECTINPUT8 dinput = NULL;
@@ -217,7 +217,7 @@ void Sprite_Transform_Draw(LPDIRECT3DTEXTURE9 image, int x, int y, int width, in
 }
 
 //bounding  box collision detection
-int Collision(SPRITE sprite1, SPRITE sprite2)
+int Collision(Sprite sprite1, Sprite sprite2)
 {
 	RECT rect1;
 	rect1.left = (long)sprite1.x;
@@ -236,7 +236,7 @@ int Collision(SPRITE sprite1, SPRITE sprite2)
 }
 
 
-bool CollisionD(SPRITE sprite1, SPRITE sprite2)
+bool CollisionD(Sprite sprite1, Sprite sprite2)
 {
 	double radius1, radius2;
 

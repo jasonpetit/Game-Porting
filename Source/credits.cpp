@@ -83,7 +83,7 @@ void Credits::Game_Run()
 	if (d3ddev->BeginScene())
 	{
 		//start drawing
-		spriteobj->Begin(D3DXSPRITE_ALPHABLEND);
+		spriteobj->Begin(D3DXSprite_ALPHABLEND);
 
 		Mix_PlayMusic(sound_music, -1);
 

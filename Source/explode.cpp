@@ -9,7 +9,7 @@
 
 SDL_Surface Xplode = NULL;
 
-SPRITE xplode;
+Sprite xplode;
 
 bool Explode::Load()
 {

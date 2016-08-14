@@ -25,7 +25,7 @@ Mix_Music *sound_song = NULL;
 Credits credit;
 Play play;
 GameMode gamemode;
-SPRITE playT, exitT, creditsT, title;
+Sprite playT, exitT, creditsT, title;
 
 bool Menu::Game_Init()
 {
@@ -144,7 +144,7 @@ void Menu::Game_Run()
 	if (d3ddev->BeginScene())
 	{
 		//start sprite handler
-		spriteobj->Begin(D3DXSPRITE_ALPHABLEND);
+		spriteobj->Begin(D3DXSprite_ALPHABLEND);
 
 		d3ddev->StretchRect(backG, NULL, backbuffer, NULL, D3DTEXF_NONE);
 
