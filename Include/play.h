@@ -7,7 +7,7 @@
 #ifndef PLAY_H
 #define PLAY_H
 
-#include "MyDirectX.h"
+//#include "MyDirectX.h"
 #include "SDLHeaders.h"
 #include "DirectSound.h"
 #include <time.h>
@@ -55,48 +55,46 @@ public:
 			}//end if (optimizedImage)
 		}//end if (loadedImage)
 	}// end load_image
+
+	void Sprite_Animate(int &frame, int startframe, int endframe, int direction, int &starttime, int delay)
+	{
+		if ((int)GetTickCount() > starttime + delay)
+		{
+			starttime = GetTickCount();
+
+			frame += direction;
+			if (frame > endframe) frame = startframe;
+			if (frame < startframe) frame = endframe;
+		}
+	}
 };
 
-class SPRITE
+struct SPRITE
 {
-private:
 	//offsets
 	float x, y;
 	//rate of movement
-	int velocity;
+	int velx, vely;
 	//current frame
-	int frame;
+	int frame, columns;
 	//animation status
 	int status;
+	//frame dimensions
+	int width, height;
+	//controls
+	int startframe, endframe;
+	int starttime, delay;
+	int direction;
 
-public:
-	//initializes the variables
-	SPRITE::SPRITE()
+	SPRITE()
 	{
-		//Initialize movement variables
-		x = y = 0;
-		velocity = 0;
-
-		//Initialize animation variables
 		frame = 0;
-	}
-
-	//handles input
-	void SPRITE::handle_events()
-	{
-
-	}
-
-	//moves the sprite
-	void SPRITE::move()
-	{
-
-	}
-
-	//shows the sprite
-	void SPRITE::show()
-	{
-
+		columns = 1;
+		width = height = 0;
+		startframe = endframe = 0;
+		direction = 1;
+		starttime = delay = 0;
+		velx = vely = 0.0f;
 	}
 };
 #endif
