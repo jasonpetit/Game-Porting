@@ -8,8 +8,14 @@
 #include "credits.h"
 #include "play.h"
 #include "Enum.h"
+#include "Audio.h"
+#include "ImgManager.h"
+#include "Sprite.h"
 
 using namespace std;
+
+extern Audio *audio;
+extern ImageResourceManager *imgMan;
 
 SDL_Surface *backG = NULL;
 SDL_Surface *Title_text = NULL;
@@ -27,22 +33,23 @@ Play play;
 GameMode gamemode;
 Sprite playT, exitT, creditsT, title;
 
-bool Menu::Game_Init()
+bool Menu::Init()
 {
-	backG = play.load_image("background.bmp");
-
-	sound_song = Mix_LoadMUS("starwars.wav");
-
-	if (backG == NULL)
+	if(!hasLoadedResources)
 	{
-		return false;
+		if(!imgMan->LoadFile("textures/background.bmp", "main_background"))
+			return false;
+
+		audio->LoadMusic("sound/starwars.wav", "title_mus");
+
+		imgMan->LoadFile("textures/Title.bmp", "Title");
+		imgMan->LoadFile("textures/play.bmp", "Play");
+		imgMan->LoadFile("textures/exit.bmp", "Exit");
+		imgMan->LoadFile("textures/credits.bmp", "Credits");
+
+		hasLoadedResources = true;
 	}
-
-	Title_text = play.load_image("Title.bmp");
-	Play_text = play.load_image("play.bmp");
-	Exit_text = play.load_image("exit.bmp");
-	Credits_text = play.load_image("credits.bmp");
-
+	
 	credit.Game_Init();
 	play.Game_Init();
 
@@ -180,6 +187,7 @@ void Menu::Game_Run()
 	}
 }
 
+/*
 void Menu::Game_end()
 {
 	backG->Release();
@@ -187,3 +195,4 @@ void Menu::Game_end()
 	play.Game_End();
 	credit.Game_End();
 }
+*/

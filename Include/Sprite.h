@@ -3,28 +3,40 @@
 #include "SDLHeaders.h"
 
 
+struct Vector2D
+{
+	float x, y;
+};
+
+
+enum
+{
+	ANIMATE_FRAMES = 0,
+	ANIMATE_SHEET,
+};
+
+struct AnimFrame
+{
+	SDL_Surface *Texture;
+	float delay;
+	AnimFrame *nextFrame;
+};
+
 // It's a real shame we're stuck to SDL 1.2; SDL 2 has rotation and flipping options, among many other cool features
 
 class Sprite
 {
 public:
 	Sprite()
-	{
-		frame = 0;
-		columns = 1;
-		width = height = 0;
-		startframe = endframe = 0;
-		direction = 1;
-		starttime = delay = 0;
-		velx = vely = 0;		
+	{		
 	}
-
-
-
+	
 private:
+	// position
+	Vector2D pos;
 
-	//offsets
-	float x, y;
+	SDL_Rect imgRect;
+
 	//rate of movement
 	float velx, vely;
 	//current frame
@@ -37,5 +49,4 @@ private:
 	int startframe, endframe;
 	int starttime, delay;
 	int direction;
-
 };

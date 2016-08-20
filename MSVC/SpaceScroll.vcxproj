@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\Audio.h" />
     <ClInclude Include="..\Include\credits.h" />
     <ClInclude Include="..\Include\DirectSound.h" />
     <ClInclude Include="..\Include\Enum.h" />
@@ -26,16 +27,29 @@
     <ClInclude Include="..\Include\State.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Audio.cpp" />
     <ClCompile Include="..\Source\credits.cpp" />
-    <ClCompile Include="..\Source\DirectSound.cpp" />
+    <ClCompile Include="..\Source\DirectSound.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Source\explode.cpp" />
     <ClCompile Include="..\Source\Game.cpp" />
     <ClCompile Include="..\Source\ImgManager.cpp" />
     <ClCompile Include="..\Source\main.cpp" />
     <ClCompile Include="..\Source\menu.cpp" />
-    <ClCompile Include="..\Source\MyDirectX.cpp" />
-    <ClCompile Include="..\Source\MyGame.cpp" />
-    <ClCompile Include="..\Source\MyWindows.cpp" />
+    <ClCompile Include="..\Source\MyDirectX.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Source\MyGame.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Source\MyWindows.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Source\play.cpp" />
     <ClCompile Include="..\Source\Sprite.cpp" />
   </ItemGroup>

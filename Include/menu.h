@@ -9,15 +9,20 @@
 
 #include "MyDirectX.h"
 #include "SDLHeaders.h"
+#include "State.h"
 
 using namespace std;
 
-class Menu
+class Menu : public State
 {
 public:
-	bool Game_Init();
-	void Game_Run();
-	void Game_end();
+	Menu() : State(), hasLoadedResources(false) {}
+	virtual bool Init();
+	virtual bool Run();
+private:
+	bool hasLoadedResources;
+
+	Sprite playT, exitT, creditsT, title, backG;
 };
 
 #endif 
