@@ -57,6 +57,9 @@
     <ClInclude Include="..\Include\explode.h">
       <Filter>Deprecated</Filter>
     </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Sprite.cpp">
@@ -100,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\explode.cpp">
       <Filter>Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

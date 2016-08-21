@@ -11,6 +11,7 @@
 #include "Audio.h"
 #include "ImgManager.h"
 #include "Sprite.h"
+#include "Mouse.h"
 
 using namespace std;
 
@@ -33,6 +34,10 @@ Play play;
 GameMode gamemode;
 Sprite playT, exitT, creditsT, title;
 
+//Handles mouse event
+int handleEvent(SDL_Event* e)
+
+
 // TODO: Finish all of this...
 // If nothing else, the Play class has a good, semi-completed example
 // of what this class should look like in the end (loading and displaying resources,
@@ -54,64 +59,91 @@ bool Menu::Init()
 		hasLoadedResources = true;
 	}
 	
-	credit.Game_Init();
-	play.Game_Init();
+	credit.Init();
+	play.Init();
 
 	//Sprite properties
-	playT.x = 15;
-	playT.y = 150;
-	playT.width = 425;
-	playT.height = 190;
-	playT.columns = 2;
-	playT.startframe = 0;
-	playT.endframe = 0;
-
-	exitT.x = 15;
-	exitT.y = 320;
-	exitT.width = 420;
-	exitT.height = 170;
-	exitT.columns = 2;
-	exitT.startframe = 0;
-	exitT.endframe = 0;
-
-	title.x = 200;
-	title.y = 25;
-	title.width = 700;
-	title.height = 190;
-	title.columns = 2;
-	title.startframe = 0;
-	title.endframe = 0;
-
-	creditsT.x = 15;
-	creditsT.y = 500;
-	creditsT.width = 500;
-	creditsT.height = 170;
-	creditsT.columns = 2;
-	creditsT.startframe = 0;
-	creditsT.endframe = 0;
-
+	playT.SetPosition(15, 150);
+	exitT.SetPosition(15,320);
+	title.SetPosition(200,25);
+	creditsT.SetPosition(15, 500);
 
 	return true;
 }
 
-void Menu::Game_Run()
+bool Menu::Game_Run()
 {
-	static bool keyRelease = true;
+	/*static bool keyRelease = true;
 	static bool plays = false;
 	static bool exits = false;
-	static bool credits = false;
+	static bool credits = false;*/
+
+	//Event handler
+	SDL_Event e;
+
+	//While application is running
+	while (!quit)
+	{
+		//Handle events on queue
+		while (SDL_PollEvent(&e) != 0)
+		{
+			//User requests quit
+			if (e.type == SDL_QUIT)
+			{
+				quit = true;
+			}
+
+			//Handle button events
+			for (int i = 0; i < TOTAL_BUTTONS; ++i)
+			{
+				gButtons[i].handleEvent(&e);
+			}
+		}
+
+		//Clear screen
+		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(gRenderer);
+
+		//Render buttons
+		for (int i = 0; i < TOTAL_BUTTONS; ++i)
+		{
+			gButtons[i].render();
+		}
+
+		//Update screen
+		SDL_RenderPresent(gRenderer);
+	}
+}
 
 
-	DirectInput_Update();
-	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 100), 1.0f, 0);
+
+
+
+
+
+
+
 
 	switch (gamemode)
 	{
 	case MENU:
+		//If mouse event happened
+		if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP)
+		{
+			//Get mouse position
+			int x, y;
+			SDL_GetMouseState(&x, &y);
+
+
+
+
+
+
 		if (Key_Down(DIK_UP) && keyRelease)
 		{
 			keyRelease = false;
-			Sprite_Animate(playT.frame, 1, 1, playT.direction, playT.starttime, playT.delay);
+			playT.
+			Sprite_Animate(playT.AddFrame.                       , 1, 1, playT.direction, playT.starttime, playT.delay);
 			Sprite_Animate(exitT.frame, 0, 0, exitT.direction, exitT.starttime, exitT.delay);
 			Sprite_Animate(creditsT.frame, 0, 0, creditsT.direction, creditsT.starttime, creditsT.delay);
 			plays = true;

@@ -25,6 +25,7 @@
     <ClInclude Include="..\Include\SDLHeaders.h" />
     <ClInclude Include="..\Include\Sprite.h" />
     <ClInclude Include="..\Include\State.h" />
+    <ClInclude Include="Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Audio.cpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="..\Source\play.cpp" />
     <ClCompile Include="..\Source\Sprite.cpp" />
     <ClCompile Include="..\Source\State.cpp" />
+    <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{059FFE2A-56B8-4581-BBEE-819E5771832D}</ProjectGuid>

@@ -6,6 +6,15 @@
 
 #include "credits.h"
 #include "SDLHeaders.h"
+#include "play.h"
+#include "explode.h"
+#include <string>
+#include <sstream>
+#include "SDLHeaders.h"
+#include "libheaders.h"
+#include "Audio.h"
+#include "ImgManager.h"
+#include "Sprite.h"
 
 using namespace std;
 
