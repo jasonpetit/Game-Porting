@@ -1,4 +1,5 @@
-
+#include "Audio.h"
+#include "SDLHeaders.h"
 
 Audio::Audio()
 {

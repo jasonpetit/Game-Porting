@@ -31,6 +31,7 @@ Mix_Chunk *sound_explode = NULL;
 Mix_Chunk *sound_fire = NULL;
 
 static bool ShipDestroyed = false;
+static bool showBullet = false;
 int score = 0;
 int lives = 3;
 
@@ -105,15 +106,17 @@ bool Play::Run()
 	}
 	ship.Update();
 
-	// TODO: Bullet position needs to be set when input button is pressed (to fire it), only then should Update() and Draw() be called for it
-	bullet.Update();
+	// [KB] I put in the showBullet bool again, and set it to update and draw the bullet when it is active. This should still work with the controls that I set up before.
+	if (showBullet)
+		bullet.Update();
 
 	for(int i = 0; i < numasteroid; ++i)
 	{
 		asteroid[i].Draw();
 	}
 	ship.Draw();
-	bullet.Draw();
+	if (showBullet)
+		bullet.Draw();
 }
 
 // TODO: fixme. This will require adding something to get the bounds of the sprite to the Sprite class

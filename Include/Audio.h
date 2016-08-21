@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDLHeaders.h"
+#include <string>
 
 class Audio
 {
