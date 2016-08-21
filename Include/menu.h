@@ -10,6 +10,7 @@
 #include "MyDirectX.h"
 #include "SDLHeaders.h"
 #include "State.h"
+#include "Sprite.h"
 
 using namespace std;
 

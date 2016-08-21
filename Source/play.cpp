@@ -10,10 +10,15 @@
 #include <sstream>
 #include "credits.h"
 #include "SDLHeaders.h"
+#include "libheaders.h"
+#include "Audio.h"
+#include "ImgManager.h"
+#include "Sprite.h"
 
 using namespace std;
 
-LPD3DXFONT font;
+extern Audio *audio;
+extern ImageResourceManager *imgMan;
 
 SDL_Surface *Game_Surf = NULL;
 SDL_Surface *Asteroid = NULL;
@@ -25,76 +30,95 @@ SDL_Event event;
 Mix_Chunk *sound_explode = NULL;
 Mix_Chunk *sound_fire = NULL;
 
-const int numasteroid = 10;
 static bool ShipDestroyed = false;
 int score = 0;
 int lives = 3;
 
-Sprite asteroid[numasteroid], ship, bullet, fonts;
+SDL_Surface *message = NULL;
+
 
 Explode xplode;
 Credits creds;
 
-bool Play::Game_Init()
+bool Play::Init()
 {
-	srand(unsigned int(time(NULL)));
-
-	sound_fire = Mix_LoadWAV("blaster.wav");
-	sound_explode = Mix_LoadWAV("blast.wav");
-
-	//create Font for the score
-	font = MakeFont("STENCIL", 24);
-
-	Game_Surf = load_image("Starfield.bmp");
-
-	if (Game_Surf == NULL)
+	if(!hasLoadedResources)
 	{
-		return false;
+		audio->LoadSound("sounds/blaster.wav", "sound_fire");
+		audio->LoadSound("sounds/blast.wav", "sound_explode");
+
+		//create Font for the score
+		font = TTF_OpenFont("fonts/lucon.ttf", 24);
+
+		if(!imgMan->LoadFile("Starfield.bmp", "Starfield"))
+			return false;
+
+		// TODO: Fixme
+		// [NG] Credits needs to be replaced with the new State-derived class.
+		// This might be a tad complex, so perhaps leave that to me.
+		creds.Game_Init();
+
+		imgMan->LoadFile("asteroid.tga", "Asteroid");
+
+		//asteroids properties
+		for(int n = 0; n < numasteroid; n++)
+		{
+			asteroid[n].SetupSpriteSheet(imgMan->GetImage("Asteroid"), 8, 8, 64, 60, 80, 0, 0, 60, 80);
+			asteroid[n].SetPosition((float)(rand() % (SCREENW - 65)), (float)(rand() % (SCREENH - 65)));
+
+			// [NG] this is so stupid. Don't do this in real production code. But I don't have time to make better stuff.
+			for(int i = 0; i < 64; ++i)
+			{
+				asteroid[n].AddSheetFrame(150.f);
+			}
+		}
+
+		imgMan->LoadFile("ships.png", "Ships");
+
+		//ship properties
+		ship.SetupSpriteSheet(imgMan->GetImage("Ships"), 0, 0, 1, 36, 36, 0, 0, 0, 0);
+		ship.AddSheetFrame(120);
+		ship.SetPosition(475, 350);
+
+
+		imgMan->LoadFile("SpaceBu.bmp", "Bullet");
+
+		//bullet Properties
+		bullet.AddFrame(imgMan->GetImage("Bullet"), 300);
+		bullet.SetLooping(false);
+		bullet.SetInitialVelocity(0, 1.f);
+
+		imgMan->LoadFile("Explosions.png", "Explosions");
+		explosion.SetupSpriteSheet(imgMan->GetImage("Explosions"), 8, 5, 40, 64, 64, 0, 256, 64, 0);
+
+		hasLoadedResources = true;
 	}
-
-	creds.Game_Init();
-
-	Asteroid = load_image("asteroid.tga");
-
-	//asteroids properties
-	for (int n = 0; n < numasteroid; n++)
-	{
-		asteroid[n].x = (float)(rand() % (SCREENW - 65));
-		asteroid[n].y = (float)(rand() % (SCREENH - 65));
-		asteroid[n].width = 60;
-		asteroid[n].height = 60;
-		asteroid[n].columns = 8;
-		asteroid[n].startframe = 0;
-		asteroid[n].endframe = 63;
-		asteroid[n].delay = 150;
-		asteroid[n].velx = 0.25f;
-		asteroid[n].vely = 0.25f;
-	}
-
-	Ship = load_image("ships.png");
-
-	//ship properties
-	ship.x = 475;
-	ship.y = 350;
-	ship.width = ship.height = 36;
-	ship.columns = 8;
-	ship.startframe = 0;
-	ship.endframe = 0;
-	ship.endframe = 0;
-	ship.delay = 120;
-
-	Bullet = load_image("SpaceBu.bmp");
-
-	//bullet Properties
-	bullet.width = 35;
-	bullet.height = 35;
-	bullet.vely = 1.0f;
-
-	xplode.Load();
 
 	return true;
 }
 
+bool Play::Run()
+{
+	for(int i = 0; i < numasteroid; ++i)
+	{
+		asteroid[i].Update();
+	}
+	ship.Update();
+
+	// TODO: Bullet position needs to be set when input button is pressed (to fire it), only then should Update() and Draw() be called for it
+	bullet.Update();
+
+	for(int i = 0; i < numasteroid; ++i)
+	{
+		asteroid[i].Draw();
+	}
+	ship.Draw();
+	bullet.Draw();
+}
+
+// TODO: fixme. This will require adding something to get the bounds of the sprite to the Sprite class
+// probably best to use startingRect.w and startingRect.h as the boundaries.
+// so, create a function in the sprite class to return startingRect, and go from there.
 void rebound(Sprite &sprite1, Sprite &sprite2)
 {
 	float centerx1 = sprite1.x + sprite1.width / 2;
@@ -125,6 +149,17 @@ void rebound(Sprite &sprite1, Sprite &sprite2)
 	sprite1.y += sprite1.vely;
 }
 
+// TODO: move this stuff out of this function to the other Run() function
+// be sure to have it flow properly in terms of logic
+// [NG] SDL_PollEvent should only ever really run in the main() function, or you risk
+// the chance of popping events off the stack in places you shouldn't have.
+// if you need to have input events processed elsewhere (such as in this instance)
+// then you need to pass the unprocessed event data to a function from the main() function.
+// I can probably set this up later if this is too confusing/difficult
+
+// One last note here: all SDL_Mixer calls can be replaced with calls to the Audio class
+// e.g. audio->PlaySound(). The extern pointer at the top should link to the one in main.cpp
+// and thus the Audio system should be able to be accessed from here (same with the Image Manager)
 void Play::Game_Run()
 {
 	/*if (!d3ddev)

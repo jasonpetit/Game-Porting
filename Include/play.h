@@ -9,28 +9,23 @@
 
 //#include "MyDirectX.h"
 #include "SDLHeaders.h"
-#include "DirectSound.h"
 #include "libheaders.h"
+#include "State.h"
 
-class Play
+const int numasteroid = 10;
+
+class Play : public State
 {
 public:
+	Play() : State(), hasLoadedResources(false) {}
+
 	//Game functions
-	bool Game_Init();
-	void Game_Run();
-	void Game_End();
-
-
-	void Sprite_Animate(int &frame, int startframe, int endframe, int direction, int &starttime, int delay)
-	{
-		if ((int)GetTickCount() > starttime + delay)
-		{
-			starttime = GetTickCount();
-
-			frame += direction;
-			if (frame > endframe) frame = startframe;
-			if (frame < startframe) frame = endframe;
-		}
-	}
+	virtual bool Init();
+	virtual bool Run();
+	
+private:
+	bool hasLoadedResources;
+	TTF_Font *font;
+	Sprite asteroid[numasteroid], ship, bullet, explosion;
 };
 #endif

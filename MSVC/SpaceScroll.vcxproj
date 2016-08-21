@@ -52,6 +52,7 @@
     </ClCompile>
     <ClCompile Include="..\Source\play.cpp" />
     <ClCompile Include="..\Source\Sprite.cpp" />
+    <ClCompile Include="..\Source\State.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{059FFE2A-56B8-4581-BBEE-819E5771832D}</ProjectGuid>

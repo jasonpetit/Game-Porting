@@ -8,3 +8,5 @@ public:
 	virtual void End() {}
 private:
 };
+
+bool ChangeState(State *newState);

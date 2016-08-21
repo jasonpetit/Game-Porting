@@ -33,6 +33,10 @@ Play play;
 GameMode gamemode;
 Sprite playT, exitT, creditsT, title;
 
+// TODO: Finish all of this...
+// If nothing else, the Play class has a good, semi-completed example
+// of what this class should look like in the end (loading and displaying resources,
+// when to update and when to draw, etc.)
 bool Menu::Init()
 {
 	if(!hasLoadedResources)

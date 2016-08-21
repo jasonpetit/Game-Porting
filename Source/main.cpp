@@ -4,7 +4,7 @@
 #include "ImgManager.h"
 #include "State.h"
 #include "menu.h"
-#include "Game.h"
+#include "play.h"
 
 const std::string APPTITLE = "BATTLE GALAXY";
 const int SCREENW = 1024;
@@ -16,10 +16,10 @@ SDL_Event event;
 
 Audio *audio;
 ImageResourceManager *imgMan;
-State *activeState;
+State *activeState = nullptr;
 
 Menu *menuState;
-Game *playState;
+Play *playState;
 
 
 int main(int argc, char *argv[])
@@ -31,15 +31,17 @@ int main(int argc, char *argv[])
 	//initialize SDL
 	if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
 	{
-		return false;
+		return 0;
 	}
+
+	if(TTF_Init() == -1) { return 0; }
 
 	Screen = SDL_SetVideoMode(SCREENW, SCREENH, SCREEN_BP, SDL_SWSURFACE);
 
 	//if there was an error
 	if(Screen == NULL)
 	{
-		return false;
+		return 0;
 	}
 
 	//set the caption
@@ -52,10 +54,13 @@ int main(int argc, char *argv[])
 
 	imgMan = new ImageResourceManager();
 
-	//activeState = new
+	menuState = new Menu();
+	playState = new Play();
+	ChangeState(menuState);
 
 	while(gameActive)
 	{
+		// TODO: Pass unprocessed events to the active state
 		if(SDL_PollEvent(&event))
 		{
 			if(event.type == SDL_KEYDOWN)

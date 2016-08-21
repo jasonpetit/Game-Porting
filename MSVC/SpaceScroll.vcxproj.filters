@@ -10,21 +10,15 @@
     <Filter Include="Deprecated">
       <UniqueIdentifier>{7f29e397-1d8a-45cd-83e4-d10b401fc7ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game States">
+      <UniqueIdentifier>{7db1bfe6-7ec8-405b-b823-c40c0c37011f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Include\credits.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\explode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\play.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\SDLHeaders.h">
@@ -54,18 +48,18 @@
     <ClInclude Include="..\Include\Audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\menu.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\play.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\credits.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\credits.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\explode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\play.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Sprite.cpp">
@@ -94,6 +88,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\MyGame.cpp">
       <Filter>Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\menu.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\play.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\credits.cpp">
+      <Filter>Game States</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
