@@ -18,9 +18,6 @@
     <ClInclude Include="..\Include\Enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\explode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\SDLHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,11 +54,11 @@
     <ClInclude Include="..\Include\credits.h">
       <Filter>Game States</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\explode.h">
+      <Filter>Deprecated</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\explode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -100,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\credits.cpp">
       <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\explode.cpp">
+      <Filter>Deprecated</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
