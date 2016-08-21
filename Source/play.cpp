@@ -48,31 +48,30 @@ void Play::ProcessInput(SDL_Event &event)
 		switch(event.key.keysym.sym)
 		{
 		case SDLK_UP:
-			ship.y -= 0.55f;
-			if(ship.y < 0)
-				ship.y = 0;
+			ship.Move(0, -0.55f);
+			if(ship.GetPosition.y < 0)
+				ship.SetPosition(ship.GetPosition.x, 0);
 			break;
 		case SDLK_LEFT:
-			ship.x -= 0.55f;
-			if(ship.x < 0)
-				ship.x = 0;
+			ship.Move(-0.55f, 0);
+			if(ship.GetPosition.x < 0)
+				ship.SetPosition(0, ship.GetPosition.y);
 			break;
 		case SDLK_DOWN:
-			ship.y += 0.55f;
-			if(ship.y > SCREENH - ship.height)
-				ship.y = SCREENH - ship.height;
+			ship.Move(0, 0.55f);
+			if(ship.GetPosition.y > SCREENH)
+				ship.SetPosition(ship.GetPosition.x, SCREENH);
 			break;
 		case SDLK_RIGHT:
-			ship.x += 0.55f;
-			if(ship.x > SCREENW - ship.width)
-				ship.x = SCREENW - ship.width;
+			ship.Move(0.55f, 0);
+			if(ship.GetPosition.x > SCREENW)
+				ship.SetPosition(SCREENW, ship.GetPosition.y);
 			break;
 		case SDLK_SPACE:
 			if(!showBullet)
 			{
 				showBullet = true;
-				bullet.x = ship.x;
-				bullet.y = ship.y;
+				bullet.SetPosition(ship.GetPosition.x, ship.GetPosition.y);
 				Mix_PlayChannel(-1, sound_fire, 0);
 			}
 			else
