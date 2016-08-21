@@ -18,6 +18,7 @@ class Menu : public State
 {
 public:
 	Menu() : State(), hasLoadedResources(false) {}
+	virtual void ProcessInput(SDL_Event &event);
 	virtual bool Init();
 	virtual bool Run();
 private:

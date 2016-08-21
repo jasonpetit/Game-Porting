@@ -60,13 +60,15 @@ int main(int argc, char *argv[])
 
 	while(gameActive)
 	{
-		// TODO: Pass unprocessed events to the active state
-		if(SDL_PollEvent(&event))
+		while(SDL_PollEvent(&event))
 		{
 			if(event.type == SDL_KEYDOWN)
 			{
 				if(event.key.keysym.sym == SDLK_ESCAPE)
 					gameActive = false;
+
+				else
+					activeState->ProcessInput(event);
 			}
 			else if(event.type == SDL_QUIT)
 			{

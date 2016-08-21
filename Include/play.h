@@ -20,6 +20,7 @@ public:
 	Play() : State(), hasLoadedResources(false) {}
 
 	//Game functions
+	virtual void ProcessInput(SDL_Event &event);
 	virtual bool Init();
 	virtual bool Run();
 	

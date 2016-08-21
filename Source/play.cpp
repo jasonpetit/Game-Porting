@@ -41,6 +41,49 @@ SDL_Surface *message = NULL;
 Explode xplode;
 Credits creds;
 
+void Play::ProcessInput(SDL_Event &event)
+{
+	if(event.type == SDL_KEYDOWN)
+	{
+		switch(event.key.keysym.sym)
+		{
+		case SDLK_UP:
+			ship.y -= 0.55f;
+			if(ship.y < 0)
+				ship.y = 0;
+			break;
+		case SDLK_LEFT:
+			ship.x -= 0.55f;
+			if(ship.x < 0)
+				ship.x = 0;
+			break;
+		case SDLK_DOWN:
+			ship.y += 0.55f;
+			if(ship.y > SCREENH - ship.height)
+				ship.y = SCREENH - ship.height;
+			break;
+		case SDLK_RIGHT:
+			ship.x += 0.55f;
+			if(ship.x > SCREENW - ship.width)
+				ship.x = SCREENW - ship.width;
+			break;
+		case SDLK_SPACE:
+			if(!showBullet)
+			{
+				showBullet = true;
+				bullet.x = ship.x;
+				bullet.y = ship.y;
+				Mix_PlayChannel(-1, sound_fire, 0);
+			}
+			else
+			{
+				showBullet = false;
+			}
+			break;
+		}
+	}
+}
+
 bool Play::Init()
 {
 	if(!hasLoadedResources)
@@ -274,56 +317,7 @@ void Play::Game_Run()
 	{
 		Sprite_Animate(asteroid[n].frame, asteroid[n].startframe, asteroid[n].endframe, asteroid[n].direction, asteroid[n].starttime, asteroid[n].delay);
 	}
-
-	if (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_KEYDOWN)
-		{
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_UP:
-			{
-				ship.y -= 0.55f;
-				if (ship.y < 0)
-					ship.y = 0;
-				break;
-			}
-			case SDLK_LEFT:
-			{
-				ship.x -= 0.55f;
-				if (ship.x < 0)
-					ship.x = 0;
-				break;
-			}
-			case SDLK_DOWN:
-			{
-				ship.y += 0.55f;
-				if (ship.y > SCREENH - ship.height)
-					ship.y = SCREENH - ship.height;
-			}
-			case SDLK_RIGHT:
-			{
-				ship.x += 0.55f;
-				if (ship.x > SCREENW - ship.width)
-					ship.x = SCREENW - ship.width;
-			}
-			case SDLK_SPACE:
-			{
-				if (!showBullet)
-				{
-					showBullet = true;
-					bullet.x = ship.x;
-					bullet.y = ship.y;
-					Mix_PlayChannel(-1, sound_fire, 0);
-				}
-				else
-				{
-					showBullet = false;
-				}
-			}
-			}
-		}
-	}
+	
 	/*if (Key_Down(DIK_UP))
 	{
 		ship.y -= 0.55f;

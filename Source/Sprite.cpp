@@ -149,6 +149,12 @@ Vector2D Sprite::GetPosition() const
 	return pos;
 }
 
+void Sprite::Move(float x, float y)
+{
+	pos.x += x;
+	pos.y += y;
+}
+
 void Sprite::SetLooping(bool l)
 {
 	loop = l;

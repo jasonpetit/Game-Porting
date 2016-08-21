@@ -39,6 +39,7 @@ public:
 	void SetInitialVelocity(float VelX, float VelY);
 	void SetPosition(float x, float y);
 	Vector2D GetPosition() const;
+	void Move(float x, float y);	// offset the sprite's position by x, y (relative to current position)
 
 	void SetLooping(bool l);
 	void Reactivate();
