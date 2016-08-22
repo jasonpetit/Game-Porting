@@ -115,14 +115,12 @@ bool Menu::Game_Run()
 	}
 }
 
-
-
-
-
-
-
-
-
+void Menu::ProcessInput(SDL_Event &event)
+{
+	// [KB] Okay so I was going to switch the events for this over to the ProcessInput function
+	//but I'm not sure what needs to be done with this event. I'm pretty sure the quit in main()
+	//will work for the entire game, and I'm not sure what to do with the button events.
+}
 
 	switch (gamemode)
 	{
