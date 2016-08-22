@@ -3,21 +3,38 @@
 //Any duplication or use of this is prohibited unless authorized by: Jason Petit
 
 //credits.h
+#pragma once
 
 #ifndef CREDITS_H
 #define CREDITS_H
 
-#include "MyDirectX.h"
-#include "play.h"
+#include "SDLHeaders.h"
+#include "libheaders.h"
+#include "State.h"
+#include "Sprite.h"
 
 using namespace std;
 
-class Credits
+class Credits : public State
 {
 public:
-	bool Game_Init();
-	void Game_Run();
-	void Game_End();
+	Credits() : State(STATE_INCREDITS), hasLoadedResources(false) {}
+	virtual bool Init();
+	virtual bool Run();
+
+private:
+	// Laziness~
+	TTF_Font *m_creditFont;
+	TTF_Font *m_roleFont;
+	TTF_Font *m_nameFont;
+
+	Sprite backSurface;
+
+	bool hasLoadedResources;
+
+	int gTimer, moveTimer;
+
+	float iTextY;
 };
 
 #endif

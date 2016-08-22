@@ -5,13 +5,13 @@
 //menu.cpp
 
 #include "menu.h"
-#include "credits.h"
+//#include "credits.h"
 #include "play.h"
-#include "Enum.h"
+//#include "Enum.h"
 #include "Audio.h"
 #include "ImgManager.h"
 #include "Sprite.h"
-#include "Mouse.h"
+//#include "Mouse.h"
 
 using namespace std;
 
@@ -29,13 +29,13 @@ SDL_Surface *Hcredits = NULL;
 
 Mix_Music *sound_song = NULL;
 
-Credits credit;
+//Credits credit;
 Play play;
-GameMode gamemode;
+//GameMode gamemode;
 Sprite playT, exitT, creditsT, title;
 
 //Handles mouse event
-int handleEvent(SDL_Event* e)
+//int handleEvent(SDL_Event* e);
 
 
 // TODO: Finish all of this...
@@ -51,6 +51,7 @@ bool Menu::Init()
 
 		audio->LoadMusic("sound/starwars.wav", "title_mus");
 
+		imgMan->LoadFile("textures/empty.bmp", "NULLImage");
 		imgMan->LoadFile("textures/Title.bmp", "Title");
 		imgMan->LoadFile("textures/play.bmp", "Play");
 		imgMan->LoadFile("textures/exit.bmp", "Exit");
@@ -59,59 +60,95 @@ bool Menu::Init()
 		hasLoadedResources = true;
 	}
 	
-	credit.Init();
-	play.Init();
+	menuItem = MENU_PLAY;
+	audio->PlayMusic("title_mus");
+
+	backGround.AddFrame(imgMan->GetImage("main_background"), 500);
+	backGround.SetStretch(true);
 
 	//Sprite properties
+	playT.AddFrame(imgMan->GetImage("Play"), 100);
+	playT.AddFrame(imgMan->GetImage("NULLImage"), 100);
+	//playT.StopAnimation();
 	playT.SetPosition(15, 150);
+
+	exitT.AddFrame(imgMan->GetImage("Exit"), 100);
+	exitT.AddFrame(imgMan->GetImage("NULLImage"), 100);
+	exitT.StopAnimation();
 	exitT.SetPosition(15,320);
+
+	title.AddFrame(imgMan->GetImage("Title"), 100);
 	title.SetPosition(200,25);
+
+	creditsT.AddFrame(imgMan->GetImage("Credits"), 100);
+	creditsT.AddFrame(imgMan->GetImage("NULLImage"), 100);
+	creditsT.StopAnimation();
 	creditsT.SetPosition(15, 500);
 
 	return true;
 }
 
-bool Menu::Game_Run()
+bool Menu::Run()
 {
-	/*static bool keyRelease = true;
-	static bool plays = false;
-	static bool exits = false;
-	static bool credits = false;*/
-
-	//Event handler
-	SDL_Event e;
-
-	//While application is running
-	while (!quit)
+	if(leavingMenu)
 	{
-		//Handle events on queue
-		while (SDL_PollEvent(&e) != 0)
-		{
-			//User requests quit
-			if (e.type == SDL_QUIT)
-			{
-				quit = true;
-			}
+		leavingMenu = false;
+		return false;
+	}
 
-			//Handle button events
-			for (int i = 0; i < TOTAL_BUTTONS; ++i)
-			{
-				gButtons[i].handleEvent(&e);
-			}
-		}
+	playT.Update();
+	exitT.Update();
+	creditsT.Update();
 
-		//Clear screen
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(gRenderer);
+	backGround.Draw();
+	title.Draw();
+	playT.Draw();
+	exitT.Draw();
+	creditsT.Draw();
 
-		//Render buttons
-		for (int i = 0; i < TOTAL_BUTTONS; ++i)
-		{
-			gButtons[i].render();
-		}
+	return true;
+}
 
-		//Update screen
-		SDL_RenderPresent(gRenderer);
+void Menu::ProcessMenuItem(int item)
+{
+	switch(item)
+	{
+	case MENU_PLAY:
+		SetNextState(STATE_PLAYING);
+		break;
+	case MENU_QUIT:
+		SetNextState(STATE_WANTEXIT);
+		break;
+	case MENU_CREDITS:
+		SetNextState(STATE_INCREDITS);
+		break;
+	default:
+		return;
+	}
+	leavingMenu = true;
+}
+
+void Menu::ProcessSelection()
+{
+	switch(menuItem)
+	{
+	case MENU_PLAY:
+		playT.RestartAnimation();
+		exitT.StopAnimation();
+		creditsT.StopAnimation();
+		break;
+	case MENU_QUIT:
+		playT.StopAnimation();
+		exitT.RestartAnimation();
+		creditsT.StopAnimation();
+		break;
+	case MENU_CREDITS:
+		playT.StopAnimation();
+		exitT.StopAnimation();
+		creditsT.RestartAnimation();
+		break;
+	default:
+		break;
 	}
 }
 
@@ -120,67 +157,37 @@ void Menu::ProcessInput(SDL_Event &event)
 	// [KB] Okay so I was going to switch the events for this over to the ProcessInput function
 	//but I'm not sure what needs to be done with this event. I'm pretty sure the quit in main()
 	//will work for the entire game, and I'm not sure what to do with the button events.
+
+	// [NG] You are correct, pressing escape will be handled across the whole game since it is dealt with
+	// in the main loop. 
+	if(event.type == SDL_KEYDOWN)
+	{
+		switch(event.key.keysym.sym)
+		{
+		case SDLK_UP:
+			menuItem--;
+			if(menuItem < 0)
+				menuItem = 0;
+			else
+				ProcessSelection();
+			break;
+
+		case SDLK_DOWN:
+			menuItem++;
+			if(menuItem >= MAX_MENU_ITEMS)
+				menuItem = MAX_MENU_ITEMS - 1;
+			else
+				ProcessSelection();
+			break;
+			
+		case SDLK_RETURN:
+			ProcessMenuItem(menuItem);
+			break;
+		}
+	}
 }
 
-	switch (gamemode)
-	{
-	case MENU:
-		//If mouse event happened
-		if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP)
-		{
-			//Get mouse position
-			int x, y;
-			SDL_GetMouseState(&x, &y);
-
-
-
-
-
-
-		if (Key_Down(DIK_UP) && keyRelease)
-		{
-			keyRelease = false;
-			playT.
-			Sprite_Animate(playT.AddFrame.                       , 1, 1, playT.direction, playT.starttime, playT.delay);
-			Sprite_Animate(exitT.frame, 0, 0, exitT.direction, exitT.starttime, exitT.delay);
-			Sprite_Animate(creditsT.frame, 0, 0, creditsT.direction, creditsT.starttime, creditsT.delay);
-			plays = true;
-		}
-		if (!Key_Down(DIK_UP))
-		{
-			keyRelease = true;
-		}
-		if (Key_Down(DIK_RETURN) && plays)
-		{
-			plays = false;
-			gamemode = PLAY;
-		}
-		if (Key_Down(DIK_LEFT))
-		{
-			Sprite_Animate(exitT.frame, 1, 1, exitT.direction, exitT.starttime, exitT.delay);
-			Sprite_Animate(playT.frame, 0, 0, playT.direction, playT.starttime, playT.delay);
-			Sprite_Animate(creditsT.frame, 0, 0, creditsT.direction, creditsT.starttime, creditsT.delay);
-			exits = true;
-		}
-		if (Key_Down(DIK_RETURN) && exits)
-		{
-			exits = false;
-			gamemode = EXIT;
-		}
-		if (Key_Down(DIK_RIGHT))
-		{
-			Sprite_Animate(playT.frame, 0, 0, playT.direction, playT.starttime, playT.delay);
-			Sprite_Animate(exitT.frame, 0, 0, exitT.direction, exitT.starttime, exitT.delay);
-			Sprite_Animate(creditsT.frame, 1, 1, creditsT.direction, creditsT.starttime, creditsT.delay);
-			credits = true;
-		}
-		if (Key_Down(DIK_RETURN) && credits)
-		{
-			credits = false;
-			gamemode = CREDITS;
-		}
-		break;
-	}
+/*
 	//start rendering
 	if (d3ddev->BeginScene())
 	{
@@ -221,7 +228,6 @@ void Menu::ProcessInput(SDL_Event &event)
 	}
 }
 
-/*
 void Menu::Game_end()
 {
 	backG->Release();

@@ -3,25 +3,39 @@
 //Any duplication or use of this is prohibited unless authorized by: Jason Petit
 
 //menu.h
+#pragma once
 
 #ifndef MENU_H
 #define MENU_H
 
-#include "MyDirectX.h"
 #include "SDLHeaders.h"
+#include "libheaders.h"
 #include "State.h"
 #include "Sprite.h"
 
 using namespace std;
 
+enum
+{
+	MENU_PLAY = 0,
+	MENU_QUIT,
+	MENU_CREDITS,
+
+	MAX_MENU_ITEMS
+};
+
 class Menu : public State
 {
 public:
-	Menu() : State(), hasLoadedResources(false) {}
+	Menu() : State(STATE_MAINMENU), hasLoadedResources(false), leavingMenu(false) {}
 	virtual void ProcessInput(SDL_Event &event);
 	virtual bool Init();
-	virtual bool Game_Run();
+	virtual bool Run();
 
+	void ProcessMenuItem(int item);
+	void ProcessSelection();
+
+	/*
 	// Initializes internal variables
 	LButton();
 
@@ -33,10 +47,15 @@ public:
 
 	//Shows button sprite
 	void render();
+	*/
+
 private:
 	bool hasLoadedResources;
+	bool leavingMenu;
 
-	Sprite playT, exitT, creditsT, title, backG;
+	int menuItem;
+
+	Sprite playT, exitT, creditsT, title, backGround;
 };
 
 #endif 

@@ -5,6 +5,7 @@
 #include "State.h"
 #include "menu.h"
 #include "play.h"
+#include "credits.h"
 
 const std::string APPTITLE = "BATTLE GALAXY";
 const int SCREENW = 1024;
@@ -20,13 +21,14 @@ State *activeState = nullptr;
 
 Menu *menuState;
 Play *playState;
+Credits *creditState;
 
 
 int main(int argc, char *argv[])
 {
 	bool gameActive = true;
 
-	srand(time(NULL));
+	srand(unsigned int (time(NULL)));
 
 	//initialize SDL
 	if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
@@ -56,13 +58,16 @@ int main(int argc, char *argv[])
 
 	menuState = new Menu();
 	playState = new Play();
+	creditState = new Credits();
 	ChangeState(menuState);
 
 	while(gameActive)
 	{
+		SDL_FillRect(Screen, NULL, SDL_MapRGB(Screen->format, 0, 0, 0));
+
 		while(SDL_PollEvent(&event))
 		{
-			if(event.type == SDL_KEYDOWN)
+			if(event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
 			{
 				if(event.key.keysym.sym == SDLK_ESCAPE)
 					gameActive = false;
@@ -79,7 +84,29 @@ int main(int argc, char *argv[])
 		if(activeState == nullptr)
 			return 0;
 		else
-			activeState->Run();
+			if(!activeState->Run())
+			{
+				if(activeState->GetStateID() == STATE_WANTEXIT)
+					gameActive = false;
+				else
+				{
+					switch(activeState->GetStateTarget())
+					{
+					case STATE_MAINMENU:
+						ChangeState(menuState);
+						break;
+					case STATE_PLAYING:
+						ChangeState(playState);
+						break;
+					case STATE_INCREDITS:
+						ChangeState(creditState);
+						break;
+					default:
+						gameActive = false;
+						break;
+					}
+				}
+			}
 
 		//update the screen
 		if(SDL_Flip(Screen) == -1)
@@ -87,6 +114,10 @@ int main(int argc, char *argv[])
 			gameActive = false;
 		}
 	}
+
+	//TTF_CloseFont(font);
+	//Quit SDL_ttf
+	TTF_Quit();
 
 	return 0;
 }

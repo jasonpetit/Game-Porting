@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "menu.h"
 
+/*
 class Mouse : public State
 {
 public:
@@ -30,6 +31,7 @@ private:
 	LButtonSprite mCurrentSprite;
 
 };
+*/
 
 
 #endif

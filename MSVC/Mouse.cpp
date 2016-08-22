@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "Mouse.h"
 
+/*
 //Mouse button sprites
 SDL_Rect gSpriteClips[BUTTON_SPRITE_TOTAL];
 Mouse gButtonSpriteSheetTexture;
@@ -120,3 +121,5 @@ void Mouse::render()
 	//Show current button sprite
 	gButtonSpriteSheetTexture.render(mPosition.x, mPosition.y, &gSpriteClips[mCurrentSprite]);
 }
+
+*/

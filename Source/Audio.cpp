@@ -3,7 +3,12 @@
 
 Audio::Audio()
 {
-	isOpen = (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 8, 4096) != -1);
+	isOpen = (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 512) == -1 ? false : true);
+	if(isOpen)
+	{
+		Mix_Volume(-1, 64);
+		Mix_VolumeMusic(76);
+	}
 }
 
 Audio::~Audio()
@@ -34,6 +39,11 @@ void Audio::PlayMusic(const std::string &musName, bool loop /*= true*/)
 
 	if(m_songs.find(musName) != m_songs.end())
 		Mix_PlayMusic(m_songs[musName], (loop ? -1 : 0));
+}
+
+void Audio::StopMusic()
+{
+	Mix_HaltMusic();
 }
 
 void Audio::PauseMusic()

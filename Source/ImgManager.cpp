@@ -22,6 +22,7 @@ bool ImageResourceManager::LoadFile(const std::string &file, const std::string &
 	}
 
 	m_resources[key] = newImage;
+	return true;
 }
 
 void ImageResourceManager::DestroyResource(const std::string &key)

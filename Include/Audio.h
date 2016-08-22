@@ -15,6 +15,7 @@ public:
 	// Handle music
 	bool LoadMusic(const std::string &fileName, const std::string &key);
 	void PlayMusic(const std::string &musName, bool loop = true);
+	void StopMusic();
 	void PauseMusic();
 	void UnPauseMusic();
 	void RestartMusic();

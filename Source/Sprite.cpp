@@ -2,9 +2,12 @@
 #include "libheaders.h"
 #include "Sprite.h"
 
+#pragma warning(disable: 4244) // Conversion possible loss of data
+#pragma warning(disable: 4018) // Signed/unsigned mismatch
+
 extern SDL_Surface *Screen;
 
-Sprite::Sprite() : tickTime(0.f), currentFrame(0), noRender(false), loop(true), animMode(ANIMATE_FRAMES)
+Sprite::Sprite() : tickTime(0.f), currentFrame(0), noRender(false), loop(true), animMode(ANIMATE_FRAMES), paused(false), stretch(false), velx(0), vely(0)
 {
 	tickTime = SDL_GetTicks();
 	globalTime = tickTime;
@@ -45,8 +48,8 @@ void Sprite::Update()
 	{
 		// Time based movement so the game doesn't go so dang fast
 		float curTime = SDL_GetTicks();
-		pos.x += velx * ((curTime - globalTime) * 0.001f);
-		pos.y += vely * ((curTime - globalTime) * 0.001f);
+		pos.x += velx; //* ((curTime - globalTime) * 0.1f);
+		pos.y += vely; //* ((curTime - globalTime) * 0.1f);
 		globalTime = curTime;
 	}
 
@@ -54,44 +57,47 @@ void Sprite::Update()
 	{
 		tickTime = SDL_GetTicks();
 
-		currentFrame++;
-		if(currentFrame >= m_frames.size())
+		if(!IsPaused())
 		{
-			if(animMode == ANIMATE_SHEET)
+			currentFrame++;
+			if(currentFrame >= m_frames.size())
 			{
-				m_currentColumn++;
-				if(m_currentColumn >= columnSize)
+				if(animMode == ANIMATE_SHEET)
 				{
-					m_currentColumn = 0;
-					m_currentRow++;
-					if(m_currentRow >= rowSize)	// reset to beginning
+					m_currentColumn++;
+					if(m_currentColumn >= columnSize)
 					{
-						m_currentRow = 0;
-						imgRect = startingRect;
+						m_currentColumn = 0;
+						m_currentRow++;
+						if(m_currentRow >= rowSize)	// reset to beginning
+						{
+							m_currentRow = 0;
+							imgRect = startingRect;
+						}
+						else
+						{
+							imgRect.x = startingRect.x;
+							imgRect.y += startingRect.h;
+						}
 					}
 					else
 					{
-						imgRect.x = startingRect.x;
-						imgRect.y += startingRect.h;
+						imgRect.x += m_stepX;
+						imgRect.y += m_stepY;
 					}
 				}
-				else
-				{
-					imgRect.x += m_stepX;
-					imgRect.y += m_stepY;
-				}
-			}
 
-			if(loop)
-				currentFrame = 0;
-			else noRender = true;
+				if(loop)
+					currentFrame = 0;
+				else noRender = true;
+			}
 		}
 	}
 }
 
 void Sprite::Draw()
 {
-	if(noRender)
+	if(noRender || m_frames.empty())
 		return;
 
 	if(animMode == ANIMATE_SHEET)
@@ -103,6 +109,8 @@ void Sprite::Draw()
 	}
 	else
 	{
+		if(m_frames[currentFrame].Texture == NULL)
+			return;
 		SDL_Rect offset;
 		offset.x = pos.x;
 		offset.y = pos.y;
@@ -112,8 +120,39 @@ void Sprite::Draw()
 		imgRect.x = 0;
 		imgRect.y = 0;
 
-		SDL_BlitSurface(m_frames[currentFrame].Texture, &imgRect, Screen, &offset);
+		if(ShouldStretch())
+			SDL_BlitSurface(m_frames[currentFrame].Texture, NULL, Screen, &offset);
+		else
+			SDL_BlitSurface(m_frames[currentFrame].Texture, &imgRect, Screen, &offset);
 	}
+}
+
+void Sprite::PauseAnimation()
+{
+	paused = true;
+}
+
+void Sprite::PlayAnimation()
+{
+	paused = false;
+}
+
+void Sprite::RestartAnimation()
+{
+	tickTime = SDL_GetTicks();
+	paused = false;
+	currentFrame = 0;
+}
+
+void Sprite::StopAnimation()
+{
+	currentFrame = 0;
+	paused = true;
+}
+
+bool Sprite::IsPaused() const
+{
+	return paused;
 }
 
 void Sprite::AddFrame(SDL_Surface *tex, float duration)
@@ -138,6 +177,26 @@ void Sprite::SetInitialVelocity(float VelX, float VelY)
 	vely = VelY;
 }
 
+float Sprite::GetVelocityX() const
+{
+	return velx;
+}
+
+float Sprite::GetVelocityY() const
+{
+	return vely;
+}
+
+void Sprite::SetVelocityX(float newVelx)
+{
+	velx = newVelx;
+}
+
+void Sprite::SetVelocityY(float newVely)
+{
+	vely = newVely;
+}
+
 void Sprite::SetPosition(float x, float y)
 {
 	pos.x = x;
@@ -155,6 +214,16 @@ void Sprite::Move(float x, float y)
 	pos.y += y;
 }
 
+void Sprite::SetStretch(bool set)
+{
+	stretch = set;
+}
+
+bool Sprite::ShouldStretch() const
+{
+	return stretch;
+}
+
 void Sprite::SetLooping(bool l)
 {
 	loop = l;
@@ -163,6 +232,13 @@ void Sprite::SetLooping(bool l)
 void Sprite::Reactivate()
 {
 	noRender = false;
+	currentFrame = 0;
+	tickTime = SDL_GetTicks();
+}
+
+SDL_Rect Sprite::GetRect() const
+{
+	return startingRect;
 }
 
 bool Sprite::IsActive() const

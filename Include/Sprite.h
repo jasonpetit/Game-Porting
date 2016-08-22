@@ -33,16 +33,30 @@ public:
 	void SetupSpriteSheet(SDL_Surface *sheet, int columnCount, int rowCount, int totalFrames, float frameWidth, float frameHeight, float offsetX, float offsetY, float stepX, float stepY);
 	void Update();
 	void Draw();
+	void PauseAnimation();
+	void PlayAnimation();
+	void RestartAnimation();
+	void StopAnimation();
+	bool IsPaused() const;
 
 	void AddFrame(SDL_Surface *tex, float duration);
 	void AddSheetFrame(float duration);
 	void SetInitialVelocity(float VelX, float VelY);
+	float GetVelocityX() const;
+	float GetVelocityY() const;
+	void SetVelocityX(float newVelx);
+	void SetVelocityY(float newVely);
 	void SetPosition(float x, float y);
 	Vector2D GetPosition() const;
 	void Move(float x, float y);	// offset the sprite's position by x, y (relative to current position)
 
+	void SetStretch(bool set);
+	bool ShouldStretch() const;
+
 	void SetLooping(bool l);
 	void Reactivate();
+
+	SDL_Rect GetRect() const;
 
 	// ----------
 	// this is so dumb...
@@ -79,7 +93,11 @@ private:
 	int animMode;
 	bool loop;
 
+	bool paused;
+
 	bool noRender;
+
+	bool stretch;
 
 	float globalTime;
 };
