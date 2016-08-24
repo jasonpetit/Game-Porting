@@ -385,6 +385,7 @@ bool Play::Intersection(SDL_Rect A, SDL_Rect B)
 	return true;
 }
 
+/*
 void rebound(Sprite &sprite1, Sprite &sprite2)
 {
 	SDL_Rect spr1Bounds = sprite1.GetRect();
@@ -415,6 +416,7 @@ void rebound(Sprite &sprite1, Sprite &sprite2)
 
 	sprite1.Move(sprite1.GetVelocityX(), sprite1.GetVelocityY());
 }
+*/
 
 // TODO: move this stuff out of this function to the other Run() function
 // be sure to have it flow properly in terms of logic

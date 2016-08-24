@@ -16,7 +16,7 @@
 
 const int numasteroid = 10;
 
-void rebound(Sprite &sprite1, Sprite &sprite2);
+//void rebound(Sprite &sprite1, Sprite &sprite2);
 
 class Play : public State
 {
