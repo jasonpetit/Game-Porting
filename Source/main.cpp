@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 {
 	bool gameActive = true;
 
-	srand(unsigned int (time(NULL)));
+	srand(time(NULL));
 
 	//initialize SDL
 	if(SDL_Init(SDL_INIT_EVERYTHING) == -1)

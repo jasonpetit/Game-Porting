@@ -397,20 +397,20 @@ void rebound(Sprite &sprite1, Sprite &sprite2)
 
 	if (centerx1 < centerx2)
 	{
-		sprite1.SetVelocityX(std::abs(sprite1.GetVelocityX()) * -1);
+		sprite1.SetVelocityX(std::fabs(sprite1.GetVelocityX()) * -1);
 	}
 	else if (centerx1 > centerx2)
 	{
-		sprite1.SetVelocityX(std::abs(sprite1.GetVelocityX()));
+		sprite1.SetVelocityX(std::fabs(sprite1.GetVelocityX()));
 	}
 
 	if (centery1 < centery2)
 	{
-		sprite1.SetVelocityY(std::abs(sprite1.GetVelocityY()) * -1);
+		sprite1.SetVelocityY(std::fabs(sprite1.GetVelocityY()) * -1);
 	}
 	else
 	{
-		sprite1.SetVelocityY(std::abs(sprite1.GetVelocityY()));
+		sprite1.SetVelocityY(std::fabs(sprite1.GetVelocityY()));
 	}
 
 	sprite1.Move(sprite1.GetVelocityX(), sprite1.GetVelocityY());
