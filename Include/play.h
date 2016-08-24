@@ -27,6 +27,7 @@ public:
 	virtual void ProcessInput(SDL_Event &event);
 	virtual bool Init();
 	virtual bool Run();
+	virtual void End();
 
 	bool Collision(Sprite &sprite1, Sprite &sprite2);
 	bool Intersection(SDL_Rect A, SDL_Rect B);

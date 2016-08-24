@@ -120,6 +120,7 @@ bool Play::Init()
 			{
 				asteroid[n].AddSheetFrame(28.f);
 			}
+			asteroid[n].Reactivate();
 		}
 
 		imgMan->LoadFile("textures/ships.png", "Ships");
@@ -318,6 +319,15 @@ bool Play::Run()
 	explosion.Draw();
 
 	return true;
+}
+
+void Play::End()
+{
+	ship = bullet = explosion = backGroundImage = Sprite();
+	for(int i = 0; i < numasteroid; ++i)
+	{
+		asteroid[i] = Sprite();
+	}
 }
 
 bool Play::Collision(Sprite &sprite1, Sprite &sprite2)
