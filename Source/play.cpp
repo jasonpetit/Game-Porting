@@ -305,7 +305,7 @@ bool Play::Run()
 		DrawText((SCREENW / 2) - 50, (SCREENH / 2) - 30, font, Screen, "You Win!", MakeColor(255, 255, 255));
 		if(SDL_GetTicks() > winTimer + 5000)
 		{
-			SetNextState(STATE_MAINMENU);
+			SetNextState(STATE_INCREDITS);
 			return false;
 		}
 	}
