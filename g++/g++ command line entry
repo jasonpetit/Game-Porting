@@ -1,0 +1,5 @@
+1) Use 'cd' to navigate to the repo root folder in terminal
+2) Make sure all libraries needed are installed
+3) then run:
+
+g++ -I ./Include -o ./bin/battlegalaxy_linux ./Source/Audio.cpp ./Source/credits.cpp ./Source/ImgManager.cpp ./Source/main.cpp ./Source/menu.cpp ./Source/play.cpp ./Source/Sprite.cpp ./Source/State.cpp -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image

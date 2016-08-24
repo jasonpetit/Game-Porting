@@ -1,0 +1,1 @@
+g++ -I ./Include -o ./bin/battlegalaxy_linux ./Source/Audio.cpp ./Source/credits.cpp ./Source/ImgManager.cpp ./Source/main.cpp ./Source/menu.cpp ./Source/play.cpp ./Source/Sprite.cpp ./Source/State.cpp -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image
