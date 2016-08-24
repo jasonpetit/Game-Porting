@@ -13,14 +13,9 @@
   <ItemGroup>
     <ClInclude Include="..\Include\Audio.h" />
     <ClInclude Include="..\Include\credits.h" />
-    <ClInclude Include="..\Include\DirectSound.h" />
-    <ClInclude Include="..\Include\Enum.h" />
-    <ClInclude Include="..\Include\explode.h" />
-    <ClInclude Include="..\Include\Game.h" />
     <ClInclude Include="..\Include\ImgManager.h" />
     <ClInclude Include="..\Include\libheaders.h" />
     <ClInclude Include="..\Include\menu.h" />
-    <ClInclude Include="..\Include\MyDirectX.h" />
     <ClInclude Include="..\Include\play.h" />
     <ClInclude Include="..\Include\SDLHeaders.h" />
     <ClInclude Include="..\Include\Sprite.h" />
@@ -30,30 +25,9 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Audio.cpp" />
     <ClCompile Include="..\Source\credits.cpp" />
-    <ClCompile Include="..\Source\DirectSound.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Source\explode.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Source\Game.cpp" />
     <ClCompile Include="..\Source\ImgManager.cpp" />
     <ClCompile Include="..\Source\main.cpp" />
     <ClCompile Include="..\Source\menu.cpp" />
-    <ClCompile Include="..\Source\MyDirectX.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Source\MyGame.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Source\MyWindows.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\Source\play.cpp" />
     <ClCompile Include="..\Source\Sprite.cpp" />
     <ClCompile Include="..\Source\State.cpp" />

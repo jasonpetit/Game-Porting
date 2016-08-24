@@ -41,7 +41,7 @@ SDL_Surface *ImageResourceManager::GetImage(const std::string &key)
 		return m_resources[key]->m_imageData;
 	}
 	else
-		return nullptr;
+		return NULL;
 }
 
 SDL_Surface *ImageResourceManager::operator[](const std::string &key)

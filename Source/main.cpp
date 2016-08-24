@@ -17,7 +17,7 @@ SDL_Event event;
 
 Audio *audio;
 ImageResourceManager *imgMan;
-State *activeState = nullptr;
+State *activeState = NULL;
 
 Menu *menuState;
 Play *playState;
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		if(activeState == nullptr)
+		if(activeState == NULL)
 			return 0;
 		else
 			if(!activeState->Run())

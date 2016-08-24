@@ -294,7 +294,7 @@ bool Play::Run()
 				}
 				else
 				{
-					SetNextState(STATE_MAINMENU);
+					SetNextState(STATE_INCREDITS);
 					return false;
 				}
 			}

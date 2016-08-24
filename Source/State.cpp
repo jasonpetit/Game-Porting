@@ -6,7 +6,7 @@ extern State *activeState;
 
 bool ChangeState(State *newState)
 {
-	if(activeState != nullptr)
+	if(activeState != NULL)
 		activeState->End();
 
 	activeState = newState;
