@@ -26,18 +26,12 @@ extern Audio *audio;
 extern ImageResourceManager *imgMan;
 extern SDL_Surface *Screen;
 
-SDL_Surface *Game_Surf = NULL;
-SDL_Surface *Asteroid = NULL;
-SDL_Surface *Ship = NULL;
-SDL_Surface *Bullet = NULL;
 
-Mix_Chunk *sound_explode = NULL;
-Mix_Chunk *sound_fire = NULL;
-
-static bool ShipDestroyed = false;
-static bool showBullet = false;
 int score = 0;
 int lives = 3;
+int destroyedAsteroids = 0;
+bool win = false;
+float winTimer = 0.f;
 
 SDL_Surface *message = NULL;
 
@@ -70,12 +64,15 @@ void Play::ProcessInput(SDL_Event &event)
 			moveRight = pressed;
 			break;
 		case SDLK_SPACE:
-			if(!bullet.IsActive())
+			if(event.type == SDL_KEYDOWN)
 			{
-				//showBullet = true;
-				bullet.SetPosition(ship.GetPosition().x, ship.GetPosition().y);
-				bullet.Reactivate();
-				audio->PlaySound("sound_fire");
+				if(!bullet.IsActive())
+				{
+					//showBullet = true;
+					bullet.SetPosition(ship.GetPosition().x, ship.GetPosition().y);
+					bullet.Reactivate();
+					audio->PlaySound("sound_fire");
+				}
 			}
 			break;
 		}
@@ -86,6 +83,12 @@ bool Play::Init()
 {
 	//if(!hasLoadedResources)
 	//{
+		lives = 3;
+		score = 0;
+		destroyedAsteroids = 0;
+		winTimer = 0.f;
+		win = false;
+
 		audio->StopMusic();
 		audio->LoadSound("sound/blaster.wav", "sound_fire");
 		audio->LoadSound("sound/blast.wav", "sound_explode");
@@ -115,7 +118,7 @@ bool Play::Init()
 			// [NG] this is so stupid. Don't do this in real production code. But I don't have time to make better stuff.
 			for(int i = 0; i < 64; ++i)
 			{
-				asteroid[n].AddSheetFrame(0.01f);
+				asteroid[n].AddSheetFrame(28.f);
 			}
 		}
 
@@ -140,7 +143,7 @@ bool Play::Init()
 		explosion.SetupSpriteSheet(imgMan->GetImage("Explosions"), 8, 5, 40, 64, 64, 0, 256, 64, 0);
 		for(int i = 0; i < 40; ++i)
 		{
-			explosion.AddSheetFrame(0.01f);
+			explosion.AddSheetFrame(14.f);
 		}
 		explosion.SetLooping(false);
 		explosion.Destroy();
@@ -204,6 +207,7 @@ bool Play::Run()
 	// [KB] I put in the showBullet bool again, and set it to update and draw the bullet when it is active. This should still work with the controls that I set up before.
 	// [NG] this is actually unnecessary, as there is already code within Update() and Draw() that checks to make sure the Sprite is active, so might as well just call this every time anyway
 	bullet.Update();
+	explosion.Update();
 
 	//display font
 	stringstream out;
@@ -222,65 +226,86 @@ bool Play::Run()
 	DrawText(0, 20, font, Screen, l, MakeColor(255, 255, 255));
 
 
-	//check for sprite collisions
-
-	/*
-	for(int one = 0; one < numasteroid; one++)
+	if(!win)
 	{
-		for(int two = 0; two < numasteroid; two++)
+		//check for sprite collisions
+
+		/*
+		for(int one = 0; one < numasteroid; one++)
 		{
-			if(one != two)
+			for(int two = 0; two < numasteroid; two++)
 			{
-				if(Collision(asteroid[one], asteroid[two]))
+				if(one != two)
 				{
 					if(Collision(asteroid[one], asteroid[two]))
 					{
-						//rebound asteroid one
-						rebound(asteroid[one], asteroid[two]);
+						if(Collision(asteroid[one], asteroid[two]))
+						{
+							//rebound asteroid one
+							rebound(asteroid[one], asteroid[two]);
 
-						//rebound asteroid two
-						rebound(asteroid[two], asteroid[one]);
+							//rebound asteroid two
+							rebound(asteroid[two], asteroid[one]);
+						}
 					}
 				}
 			}
 		}
-	}
-	*/
-	
-	for(int one = 0; one < numasteroid; one++)
-	{
-		if(Collision(bullet, asteroid[one]))
+		*/
+
+		for(int one = 0; one < numasteroid; one++)
 		{
-			asteroid[one].Move(-999, 0);
-			asteroid[one].Destroy();
-			bullet.Move(0, -35);
-			explosion.SetPosition(bullet.GetPosition().x, bullet.GetPosition().y);
-			explosion.RestartAnimation();
-			explosion.Reactivate();
-			score += 100;
-			audio->PlaySound("sound_explode");
+			if(Collision(bullet, asteroid[one]))
+			{
+				asteroid[one].Move(-999, 0);
+				asteroid[one].Destroy();
+				bullet.Move(0, -35);
+				explosion.SetPosition(bullet.GetPosition().x, bullet.GetPosition().y);
+				explosion.Reactivate();
+				//explosion.RestartAnimation();
+				score += 100;
+				audio->PlaySound("sound_explode");
+				bullet.Destroy();
+
+				destroyedAsteroids++;
+				if(destroyedAsteroids >= numasteroid)
+				{
+					win = true;
+					winTimer = SDL_GetTicks();
+				}
+			}
+		}
+
+		for(int one = 0; one < numasteroid; one++)
+		{
+			if(Collision(ship, asteroid[one]))
+			{
+				ship.SetPosition(-1999, ship.GetPosition().y);
+				explosion.SetPosition(ship.GetPosition().x, ship.GetPosition().y);
+				explosion.Reactivate();
+				//explosion.RestartAnimation();
+				audio->PlaySound("sound_explode");
+				asteroid[one].SetVelocityX(asteroid[one].GetVelocityX() * -1);
+				lives--;
+				if(lives > 0)
+				{
+					ship.SetPosition(500, ship.GetPosition().y);
+				}
+				else
+				{
+					SetNextState(STATE_MAINMENU);
+					return false;
+				}
+			}
 		}
 	}
-
-	for(int one = 0; one < numasteroid; one++)
+	else
 	{
-		if(Collision(ship, asteroid[one]))
+		DrawText((SCREENW / 2) - 50, (SCREENH / 2) - 30, font, Screen, "You Win!", MakeColor(255, 255, 255));
+		if(SDL_GetTicks() > winTimer + 5000)
 		{
-			ship.SetPosition(-1999, ship.GetPosition().y);
-			explosion.SetPosition(ship.GetPosition().x, ship.GetPosition().y);
-			explosion.Reactivate();
-			audio->PlaySound("sound_explode");
-			asteroid[one].SetVelocityX(asteroid[one].GetVelocityX() * -1);
-			lives--;
-			if(lives > 0)
-			{
-				ship.SetPosition(500, ship.GetPosition().y);
-			}
-			else
-			{
-				SetNextState(STATE_MAINMENU);
-				return false;
-			}
+			SetNextState(STATE_MAINMENU);
+			return false;
 		}
 	}
 
@@ -350,9 +375,6 @@ bool Play::Intersection(SDL_Rect A, SDL_Rect B)
 	return true;
 }
 
-// TODO: fixme. This will require adding something to get the bounds of the sprite to the Sprite class
-// probably best to use startingRect.w and startingRect.h as the boundaries.
-// so, create a function in the sprite class to return startingRect, and go from there.
 void rebound(Sprite &sprite1, Sprite &sprite2)
 {
 	SDL_Rect spr1Bounds = sprite1.GetRect();
