@@ -7,7 +7,18 @@
 
 extern SDL_Surface *Screen;
 
-Sprite::Sprite() : tickTime(0.f), currentFrame(0), noRender(false), loop(true), animMode(ANIMATE_FRAMES), paused(false), stretch(false), velx(0), vely(0)
+Sprite::Sprite() : tickTime(0.f),
+					currentFrame(0),
+					noRender(false),
+					loop(true),
+					animMode(ANIMATE_FRAMES),
+					paused(false),
+					stretch(false),
+					velx(0),
+					vely(0),
+					pos(Vector2D()),
+					imgRect(SDL_Rect()),
+					startingRect(SDL_Rect())					
 {
 	tickTime = SDL_GetTicks();
 	globalTime = tickTime;
@@ -62,34 +73,33 @@ void Sprite::Update()
 			currentFrame++;
 			if(currentFrame >= m_frames.size())
 			{
-				if(animMode == ANIMATE_SHEET)
-				{
-					m_currentColumn++;
-					if(m_currentColumn >= columnSize)
-					{
-						m_currentColumn = 0;
-						m_currentRow++;
-						if(m_currentRow >= rowSize)	// reset to beginning
-						{
-							m_currentRow = 0;
-							imgRect = startingRect;
-						}
-						else
-						{
-							imgRect.x = startingRect.x;
-							imgRect.y += startingRect.h;
-						}
-					}
-					else
-					{
-						imgRect.x += m_stepX;
-						imgRect.y += m_stepY;
-					}
-				}
-
 				if(loop)
 					currentFrame = 0;
 				else noRender = true;
+			}
+			if(animMode == ANIMATE_SHEET)
+			{
+				m_currentColumn++;
+				if(m_currentColumn >= columnSize)
+				{
+					m_currentColumn = 0;
+					m_currentRow++;
+					if(m_currentRow >= rowSize)	// reset to beginning
+					{
+						m_currentRow = 0;
+						imgRect = startingRect;
+					}
+					else
+					{
+						imgRect.x = startingRect.x;
+						imgRect.y += startingRect.h;
+					}
+				}
+				else
+				{
+					imgRect.x += m_stepX;
+					imgRect.y += m_stepY;
+				}
 			}
 		}
 	}
@@ -140,6 +150,9 @@ void Sprite::PlayAnimation()
 void Sprite::RestartAnimation()
 {
 	tickTime = SDL_GetTicks();
+	imgRect = startingRect;
+	m_currentColumn = 0;
+	m_currentRow = 0;
 	paused = false;
 	currentFrame = 0;
 }
@@ -233,12 +246,32 @@ void Sprite::Reactivate()
 {
 	noRender = false;
 	currentFrame = 0;
+	imgRect = startingRect;
+	m_currentColumn = 0;
+	m_currentRow = 0;
 	tickTime = SDL_GetTicks();
 }
 
 SDL_Rect Sprite::GetRect() const
 {
-	return startingRect;
+	SDL_Rect ret = SDL_Rect();
+	if(animMode == ANIMATE_SHEET)
+	{
+		ret.h = startingRect.h;
+		ret.w = startingRect.w;
+		ret.x = pos.x;
+		ret.y = pos.y;
+		return ret;
+	}
+	else if(!m_frames.empty())
+	{
+		ret.h = m_frames[currentFrame].Texture->h;
+		ret.w = m_frames[currentFrame].Texture->w;
+		ret.x = pos.x;
+		ret.y = pos.y;
+		return ret;
+	}
+	else return ret;
 }
 
 bool Sprite::IsActive() const
